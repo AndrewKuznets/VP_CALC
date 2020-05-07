@@ -58,6 +58,15 @@
     <Compile Include="Elem_VP.xaml.cs">
       <DependentUpon>Elem_VP.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mater_props.xaml.cs">
+      <DependentUpon>Mater_props.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="One_dot_opor.xaml.cs">
+      <DependentUpon>One_dot_opor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="One_prot_opor.xaml.cs">
+      <DependentUpon>One_prot_opor.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,7 +83,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Mater_props.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="One_dot_opor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="One_force.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="One_moment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="One_prot_opor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -82,6 +107,9 @@
   <ItemGroup>
     <Compile Include="One_force.xaml.cs">
       <DependentUpon>One_force.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="One_moment.xaml.cs">
+      <DependentUpon>One_moment.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

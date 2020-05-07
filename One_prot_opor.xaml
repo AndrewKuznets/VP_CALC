@@ -1,0 +1,30 @@
+﻿<Window x:Class="VP_CALC.Prot_opor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VP_CALC"
+        mc:Ignorable="d"
+        Title="Параметры протяжённой опоры" Height="300" Width="700" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label x:Name="lblN_prot_opor" Content="Протяжённая опора №" HorizontalAlignment="Left" Margin="38,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblN_VP" Content="Первый элемент ВП №" HorizontalAlignment="Left" Margin="250,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblKol_elem" Content="Количество элементов ВП" HorizontalAlignment="Left" Margin="450,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblTG_UN" Content="Тангенс угла наклона" HorizontalAlignment="Left" Margin="38,103,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblSM_KORM" Content="Смещение кормовое,мм" HorizontalAlignment="Left" Margin="250,103,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblDZ" Content="Диаметральный зазор,мм" HorizontalAlignment="Left" Margin="38,156,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblUpr_osn" Content="Упругое основание,мм" HorizontalAlignment="Left" Margin="268,156,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblPO_comment" Content="Комментарий" HorizontalAlignment="Left" Margin="38,210,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox x:Name="txtN_prot_opor" HorizontalAlignment="Left" Height="23" Margin="190,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="txtN_VP" HorizontalAlignment="Left" Height="23" Margin="407,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
+        <TextBox x:Name="txtKol_elem" HorizontalAlignment="Left" Height="23" Margin="628,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
+        <TextBox x:Name="txtTG_UN" HorizontalAlignment="Left" Height="23" Margin="190,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"/>
+        <TextBox x:Name="txtSm_korm" HorizontalAlignment="Left" Height="23" Margin="426,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="txtDZ" HorizontalAlignment="Left" Height="23" Margin="208,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" RenderTransformOrigin="5.818,0.67"/>
+        <TextBox x:Name="txtUpr_osn" HorizontalAlignment="Left" Height="23" Margin="426,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" RenderTransformOrigin="5.818,0.67"/>
+        <TextBox x:Name="txtPO_comment" HorizontalAlignment="Left" Height="23" Margin="159,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="305" RenderTransformOrigin="5.818,0.67"/>
+        <Button x:Name="btnOk" Content="Ok" Margin="506,230,112.6,21.4" IsDefault="True" ToolTip="Сохранить данные и выйти"/>
+        <Button x:Name="btnCancel" Content="Отмена" Margin="594,230,24.6,21.4" IsCancel="True" ToolTip="Выйти без сохранения"/>
+
+    </Grid>
+</Window>

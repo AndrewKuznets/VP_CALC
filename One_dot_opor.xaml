@@ -1,0 +1,22 @@
+﻿<Window x:Class="VP_CALC.One_dot_opor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VP_CALC"
+        mc:Ignorable="d"
+        Title="Параметры точечной опоры" Height="300" Width="544.8">
+    <Grid>
+        <Label x:Name="lblN_dot_opor" Content="Точечная опора №" HorizontalAlignment="Left" Margin="49,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblN_VP" Content="Элемент ВП №" HorizontalAlignment="Left" Margin="250,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblSM_KORM" Content="Смещение кормовое,мм" HorizontalAlignment="Left" Margin="49,103,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lblDO_comment" Content="Комментарий" HorizontalAlignment="Left" Margin="49,167,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox x:Name="txtN_dot_opor" HorizontalAlignment="Left" Height="23" Margin="174,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="txtN_VP" HorizontalAlignment="Left" Height="23" Margin="359,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
+        <TextBox x:Name="txtSm_korm" HorizontalAlignment="Left" Height="23" Margin="212,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="txtDO_comment" HorizontalAlignment="Left" Height="23" Margin="156,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" RenderTransformOrigin="5.818,0.67"/>
+        <Button x:Name="btnOk" Content="Ok" Margin="370,0,102.4,10.4" IsDefault="True" ToolTip="Сохранить данные и выйти" Height="19" VerticalAlignment="Bottom"/>
+        <Button x:Name="btnCancel" Content="Отмена" Margin="461,0,16.4,10.4" IsCancel="True" ToolTip="Выйти без сохранения" Height="19" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>
