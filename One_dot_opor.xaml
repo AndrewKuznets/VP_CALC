@@ -12,9 +12,9 @@
         <Label x:Name="lblSM_KORM" Content="Смещение кормовое,мм" HorizontalAlignment="Left" Margin="49,103,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblDO_comment" Content="Комментарий" HorizontalAlignment="Left" Margin="49,167,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <TextBox x:Name="txtN_dot_opor" HorizontalAlignment="Left" Height="23" Margin="174,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
-        <TextBox x:Name="txtN_VP" HorizontalAlignment="Left" Height="23" Margin="359,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
+        <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="359,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
         <TextBox x:Name="txtSm_korm" HorizontalAlignment="Left" Height="23" Margin="212,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
-        <TextBox x:Name="txtDO_comment" HorizontalAlignment="Left" Height="23" Margin="156,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" RenderTransformOrigin="5.818,0.67"/>
+        <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="156,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" RenderTransformOrigin="5.818,0.67"/>
         <Button x:Name="btnOk" Content="Ok" Margin="370,0,102.4,10.4" IsDefault="True" ToolTip="Сохранить данные и выйти" Height="19" VerticalAlignment="Bottom"/>
         <Button x:Name="btnCancel" Content="Отмена" Margin="461,0,16.4,10.4" IsCancel="True" ToolTip="Выйти без сохранения" Height="19" VerticalAlignment="Bottom"/>
 

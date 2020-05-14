@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace VP_CALC
 {
     /// <summary>
@@ -20,9 +21,21 @@ namespace VP_CALC
     /// </summary>
     public partial class MainWindow : Window
     {
+        private VP_INPUT_DATA vp_input_data = new VP_INPUT_DATA();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+   // Добавить данные по элементу ВП
+        private void btnAddElem_Click(object sender, RoutedEventArgs e)
+        {
+            // Вызываем окно ввода имени данных по  элементу ВП
+            Elem_VP dialog = new Elem_VP();
+
+            dialog.N_Elem = vp_input_data.Elems_VP.Count + 1;
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
         }
     }
 }

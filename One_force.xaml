@@ -1,4 +1,4 @@
-﻿<Window x:Class="VP_CALC.One_force"
+﻿<Window x:Name="winOne_force" x:Class="VP_CALC.One_force"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,7 +15,7 @@
         <TextBox x:Name="txtN_Force" HorizontalAlignment="Left" Height="23" Margin="201,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
         <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="444,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
         <TextBox x:Name="txtValueForce" HorizontalAlignment="Left" Height="23" Margin="130,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
-        <TextBox x:Name="txtCommForce" HorizontalAlignment="Left" Height="23" Margin="143,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
+        <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="143,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
         <ComboBox x:Name="cmbEnv" HorizontalAlignment="Left" Margin="284,85,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ListBoxItem Content="Вода"/>
             <ListBoxItem Content="Воздух"/>

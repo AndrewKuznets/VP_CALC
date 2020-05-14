@@ -67,6 +67,7 @@
     <Compile Include="One_prot_opor.xaml.cs">
       <DependentUpon>One_prot_opor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VP_DATA.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

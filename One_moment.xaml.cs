@@ -23,5 +23,51 @@ namespace VP_CALC
         {
             InitializeComponent();
         }
+
+        // Свойство для номера момента 
+        public int N_Moment
+        {
+            set
+            {
+                txtN_Moment.Text = value.ToString();
+            }
+        }
+        // Свойство для номера элемента ВП
+        public int N_Elem
+        {
+            get
+            {
+                return Convert.ToInt32(txtN_Elem.Text);
+            }
+            set
+            {
+                txtN_Elem.Text = value.ToString();
+            }
+        }
+        // Свойство для значения момента
+        public double ValueForce
+        {
+            get
+            {
+                return Convert.ToDouble(txtValueMoment.Text);
+            }
+            set
+            {
+                txtValueMoment.Text = value.ToString();
+            }
+        }
+
+        // Свойство для комментария по моменту
+        public string Comm
+        {
+            get
+            {
+                return txtComm.Text.Trim();
+            }
+            set
+            {
+                txtComm.Text = value.Trim();
+            }
+        }
     }
 }

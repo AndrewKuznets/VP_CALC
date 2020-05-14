@@ -1,4 +1,4 @@
-﻿<Window x:Class="VP_CALC.Mater_props"
+﻿<Window x:Name="WinMater_Props" x:Class="VP_CALC.Mater_props"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,7 +15,7 @@
         <TextBox x:Name="txtN_mat" HorizontalAlignment="Left" Height="23" Margin="176,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="44"/>
         <TextBox x:Name="txtMod_upr" HorizontalAlignment="Left" Height="23" Margin="176,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
         <TextBox x:Name="txtMod_sdv" HorizontalAlignment="Left" Height="23" Margin="426,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
-        <TextBox x:Name="txtMod_upr_Copy" HorizontalAlignment="Left" Height="23" Margin="176,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.212,3.104"/>
+        <TextBox x:Name="txtDensi" HorizontalAlignment="Left" Height="23" Margin="176,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.212,3.104"/>
         <ComboBox x:Name="cmbMat_name" HorizontalAlignment="Left" Margin="384,49,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ComboBoxItem Content="сталь"/>
             <ComboBoxItem Content="бронза"/>
