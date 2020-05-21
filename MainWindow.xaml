@@ -9,49 +9,54 @@
     <Grid Margin="30,5,5,5" >
         <TabControl x:Name="tabControlVP" Margin="10,30,46,62.8">
             <TabItem Header="Общие данные">
-                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0" ToolTip="Проверить ">
                     <Label x:Name="lblCalcName" Content="Имя расчёта" HorizontalAlignment="Left" Margin="28,36,0,0" VerticalAlignment="Top" Height="26" Width="87" FontWeight="Bold"/>
                     <TextBox x:Name="txtCalcName" HorizontalAlignment="Left" Height="23" Margin="115,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" RenderTransformOrigin="-0.622,-0.13"/>
                     <Label x:Name="lblNSmOpor" Content="Количество смещаемых опор" HorizontalAlignment="Left" Margin="52,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
                     <TextBox x:Name="txtN_SmOpor" HorizontalAlignment="Left" Height="23" Margin="239,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.47,-0.017"/>
                     <Label x:Name="lblTypeDP" Content="Число типов дейдвудных подшипников" HorizontalAlignment="Left" Margin="52,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_TypeDP" HorizontalAlignment="Left" Height="23" Margin="300,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.222,0.2"/>
+                    <TextBox x:Name="txtN_TypeDP" HorizontalAlignment="Left" Height="23" Margin="300,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.222,0.2"/>
                     <Label x:Name="lblN_Type_Mat" Content="Число типов материалов" HorizontalAlignment="Left" Margin="52,168,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_TypeMat" HorizontalAlignment="Left" Height="23" Margin="300,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.222,0.2"/>
+                    <TextBox x:Name="txtN_TypeMat" HorizontalAlignment="Left" Height="23" Margin="300,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.222,0.2"/>
                     <Grid Margin="65,203,437,87">
                         <RadioButton x:Name="rbtSI" Content="СИ" HorizontalAlignment="Left" Margin="0,26,0,-0.2" VerticalAlignment="Top" Height="25" Width="101" FontWeight="Bold"/>
                         <RadioButton x:Name="rbtSGS" Content="СГС" HorizontalAlignment="Left" Margin="121,26,0,-0.2" VerticalAlignment="Top" Height="25" Width="101" FontWeight="Bold" IsChecked="True"/>
                         <Label x:Name="lblUnits" Content="Система единиц" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
                     </Grid>
 
-                    <CheckBox x:Name="chbPrintElemVP" Content="Печать элементов валопровода" HorizontalAlignment="Left" Margin="478,94,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <CheckBox x:Name="chbPrintSMElem" Content="Печать  смещения элементов " HorizontalAlignment="Left" Margin="478,137,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <CheckBox x:Name="chbPrintElemVP" Content="Печать элементов валопровода" HorizontalAlignment="Left" Margin="478,94,0,0" VerticalAlignment="Top" FontWeight="Bold" IsChecked="True"/>
+                    <CheckBox x:Name="chbPrintSMElem" Content="Печать  смещения элементов " HorizontalAlignment="Left" Margin="478,137,0,0" VerticalAlignment="Top" FontWeight="Bold" IsChecked="True"/>
                     <RadioButton x:Name="radioButtonEng" Content="Английский" HorizontalAlignment="Left" Margin="485,203,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <RadioButton x:Name="radioButtonRus" Content="Русский" HorizontalAlignment="Left" Margin="583,203,0,0" VerticalAlignment="Top" IsChecked="True" FontWeight="Bold"/>
                     <Label x:Name="lblLang" Content="Язык печати" HorizontalAlignment="Left" Margin="485,171,0,0" VerticalAlignment="Top" Width="218" FontWeight="Bold"/>
+                    <Button x:Name="btnSaveGlabalData" Content="Записать" HorizontalAlignment="Right" Margin="0,0,455.8,63.2" VerticalAlignment="Bottom" Width="507" Height="35" Click="btnSaveGlabalData_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Элементы валопровода">
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="labelTableTitle" Content="Элементы валопровода, всего" HorizontalAlignment="Left" Margin="41,18,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="235,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
-                    <DataGrid x:Name="dataGrid" Margin="10,67,13.202,53.4" Grid.ColumnSpan="4">
+                    <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="235,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" IsEnabled="False"/>
+                    <DataGrid x:Name="dgrVP_elems" Margin="10,67,13.202,53.4" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.DataContext>
+                            <local:defOne_elem_VP/>
+                        </DataGrid.DataContext>
+                        
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Длина,мм"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Диам.вала,мм"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Диам.облиц.мм"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Внтр.диам.облиц"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Слоёв"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Мат.слоя1"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Мат.слоя2"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Окр.среда"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Коментарий"/>
+                            <DataGridTextColumn  Header="№" Binding="{Binding Path= N_elem}" />
+                            <DataGridTextColumn  Header="Длина,мм" Binding="{Binding Path=Lx}" />
+                            <DataGridTextColumn  Header="Диам.вала,мм" Binding="{Binding Path=D_vala}"/>
+                            <DataGridTextColumn  Header="Диам.облиц.мм" Binding="{Binding Path = D2}"/>
+                            <DataGridTextColumn  Header="Внтр.диам.облиц" Binding="{Binding Path = D3}" />
+                            <DataGridTextColumn  Header="Слоёв" Binding="{Binding Path = N_Layers}"/>
+                            <DataGridTextColumn  Header="Мат.слоя1" Binding="{Binding Path =Mat1}" />
+                            <DataGridTextColumn  Header="Мат.слоя2" Binding="{Binding Path =Mat2}"/>
+                            <DataGridTextColumn  Header="Окр.среда" Binding="{Binding Path =Env}"/>
+                            <DataGridTextColumn  Header="Комментарий" Binding="{Binding Path =Comment}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnAddElem" Content="Добавить" HorizontalAlignment="Left" Margin="95,0,0,10.4" Width="75" ToolTip="Добавить элемент валопровода" VerticalAlignment="Bottom" Height="23" Click="btnAddElem_Click"/>
-                    <Button x:Name="btnEditElem" Content="Изменить" HorizontalAlignment="Left" Margin="186,0,0,10.4" Width="75" ToolTip="Изменить элемент валопровода" VerticalAlignment="Bottom" Height="23"/>
-                    <Button x:Name="btnDelElem" Content="Удалить" HorizontalAlignment="Left" Margin="279,0,0,10.4" Width="75" ToolTip="Удалить элемент валопровода" VerticalAlignment="Bottom" Height="23" Grid.ColumnSpan="3"/>
+                    <Button x:Name="btnEditElem" Content="Изменить" HorizontalAlignment="Left" Margin="186,0,0,10.4" Width="75" ToolTip="Изменить элемент валопровода" VerticalAlignment="Bottom" Height="23" Click="btnEditElem_Click"/>
+                    <Button x:Name="btnDelElem" Content="Удалить" HorizontalAlignment="Left" Margin="279,0,0,10.4" Width="75" ToolTip="Удалить элемент валопровода" VerticalAlignment="Bottom" Height="23" Grid.ColumnSpan="3" Click="btnDelElem_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Свойства материала" Height="20" Margin="-0.2,-1,-0.8,1">
@@ -72,16 +77,23 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Нагрузка">
-                <Grid Background="#FFE5E5E5" Margin="88,-4,-88,4">
+                <Grid Background="#FFE5E5E5" Margin="10,-4,-88.2,4.2">
+                    <Grid.DataContext>
+                        <local:defOne_force/>
+                    </Grid.DataContext>
 
-                    <Label x:Name="lbl" Content="Сосредоточенные силы" HorizontalAlignment="Left" Margin="43,28,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold"/>
-                    <DataGrid x:Name="dgrForses" HorizontalAlignment="Left" Margin="43,79,0,0" VerticalAlignment="Top" Width="338" Height="111">
+                    <Label x:Name="lbl" Content="Сосредоточенные силы, всего" HorizontalAlignment="Left" Margin="43,28,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold"/>
+                    <DataGrid x:Name="dgrForces" HorizontalAlignment="Left" Margin="43,79,0,0" VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" IsReadOnly="True" Width="338" Height="111">
+                        <DataGrid.DataContext>
+                            <local:defOne_force/>
+                        </DataGrid.DataContext>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№ эл-та"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Сила,т"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Среда"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Комментарий"/>
+                            <DataGridTextColumn Binding="{Binding Path = N_force}" Header="№"/>
+                            <DataGridTextColumn Binding="{Binding Path = N_elem}"  Header="№ эл-та"/>
+                            <DataGridTextColumn Binding="{Binding Path = Value}"  Header="Сила,т"/>
+                            <DataGridTextColumn Binding="{Binding Path = Env}"  Header="Среда"/>
+                            <DataGridTextColumn Binding="{Binding Path = Comment}" Header="Комментарий"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="lblbendMoms" Content="Изгибающие моменты" HorizontalAlignment="Left" Margin="43,247,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold"/>
@@ -93,12 +105,13 @@
                             <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Комментарий"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btnAddForce" Content="Добавить силу" HorizontalAlignment="Left" Margin="443,82,0,0" VerticalAlignment="Top" Width="89" ToolTip="Добавить силу в таблицу" Height="20"/>
-                    <Button x:Name="btnEditForce" Content="Исправить" HorizontalAlignment="Left" Margin="443,116,0,0" VerticalAlignment="Top" Width="75" ToolTip="Исправить параметры силы"/>
-                    <Button x:Name="btnDelForce" Content="Удалить" HorizontalAlignment="Left" Margin="443,154,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.563,5.043" ToolTip="Удалить силу из таблицы"/>
+                    <Button x:Name="btnAddForce" Content="Добавить силу" HorizontalAlignment="Left" Margin="443,79,0,0" VerticalAlignment="Top" Width="89" ToolTip="Добавить силу в таблицу" Height="24" Click="btnAddForce_Click"/>
+                    <Button x:Name="btnEditForce" Content="Исправить" HorizontalAlignment="Left" Margin="443,116,0,0" VerticalAlignment="Top" Width="75" ToolTip="Исправить параметры силы" Click="btnEditForce_Click"/>
+                    <Button x:Name="btnDelForce" Content="Удалить" HorizontalAlignment="Left" Margin="443,154,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.563,5.043" ToolTip="Удалить силу из таблицы" Click="btnDelForce_Click"/>
                     <Button x:Name="btnAddMom" Content="Добавить момент" HorizontalAlignment="Left" Margin="383,294,0,0" VerticalAlignment="Top" Width="113" RenderTransformOrigin="0.253,12.62"/>
                     <Button x:Name="btnEditMom" Content="Исправить" HorizontalAlignment="Left" Margin="383,330,0,0" VerticalAlignment="Top" Width="75" ToolTip="Исправить параметры моменты"/>
                     <Button x:Name="btnDelMom" Content="Удалить" HorizontalAlignment="Left" Margin="383,361,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.563,5.043" ToolTip="Удалить момент из таблицы"/>
+                    <TextBox x:Name="txtN_forces" HorizontalAlignment="Left" Height="23" Margin="238,32,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="42" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Опоры">

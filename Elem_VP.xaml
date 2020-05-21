@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VP_CALC"
         mc:Ignorable="d"
-        Title="Данные по одному элементу валопровода" Height="348.8" Width="601.6" WindowStartupLocation="CenterScreen">
+        Title="Данные по одному элементу валопровода" Height="348.8" Width="601.6" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="-5,6,18.2,5.2">
         <Label x:Name="lblN_Elem" Content="Элемент №" HorizontalAlignment="Left" Margin="28,34,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblLx" Content="Длина,мм" HorizontalAlignment="Left" Margin="28,75,0,0" VerticalAlignment="Top" FontWeight="Bold"/>

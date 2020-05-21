@@ -25,7 +25,7 @@ namespace VP_CALC
         }
 
         // Свойство для номера силы 
-        public int N_Forse
+        public int N_Force
         {
              set
             {
@@ -80,6 +80,47 @@ namespace VP_CALC
             {
                 txtComm.Text = value.Trim();
             }
+        }
+/// <summary>
+/// Обработчик кнопки Ok
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnOк_Click(object sender, RoutedEventArgs e)
+        {
+            string _str;
+            //----------Номер элемента----------------
+            _str = txtN_Elem.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+            //----------Величина силы----------------
+            _str = txtValueForce.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtValueForce.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtValueForce.Focus();
+                return;
+            }
+
+            DialogResult = true;
+            Close();
+
         }
     }
 

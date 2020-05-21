@@ -5,23 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VP_CALC"
         mc:Ignorable="d"
-        Title="Параметры сосредоточенной силы" Height="300" Width="500" WindowStartupLocation="CenterScreen">
+        Title="Параметры сосредоточенной силы" Height="300" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
+        <Grid.DataContext>
+            <local:defOne_force/>
+        </Grid.DataContext>
         <Label x:Name="lblN_force" Content="Сосредоточенная сила №" HorizontalAlignment="Left" Margin="39,36,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblN_Elem" Content="приложена к элементу ВП №" HorizontalAlignment="Left" Margin="257,36,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblValue_force" Content="Величина,т" HorizontalAlignment="Left" Margin="39,82,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblEnv" Content="Среда" HorizontalAlignment="Left" Margin="222,82,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lbCommForce" Content="Комментарий" HorizontalAlignment="Left" Margin="39,150,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBox x:Name="txtN_Force" HorizontalAlignment="Left" Height="23" Margin="201,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
+        <TextBox x:Name="txtN_Force" HorizontalAlignment="Left" Height="23" Margin="201,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" IsEnabled="False"/>
         <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="444,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
         <TextBox x:Name="txtValueForce" HorizontalAlignment="Left" Height="23" Margin="130,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
-        <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="143,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
+        <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="143,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" SpellCheck.IsEnabled="True"/>
         <ComboBox x:Name="cmbEnv" HorizontalAlignment="Left" Margin="284,85,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ListBoxItem Content="Вода"/>
             <ListBoxItem Content="Воздух"/>
             <ListBoxItem Content="Масло"/>
         </ComboBox>
-        <Button x:Name="btnOк" Content="Ок" HorizontalAlignment="Left" Margin="310,231,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.365,-0.49" IsDefault="True"/>
+        <Button x:Name="btnOк" Content="Ок" HorizontalAlignment="Left" Margin="310,231,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.365,-0.49" IsDefault="True" Click="btnOк_Click"/>
         <Button x:Name="btnEsk" Content="Отмена" HorizontalAlignment="Left" Margin="404,231,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.365,-0.49" IsDefault="True"/>
 
     </Grid>

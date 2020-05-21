@@ -110,7 +110,7 @@ namespace VP_CALC
         {
             get
             {
-                return cmbMat2.Text;
+                return cmbMat2.Text.Trim();
             }
             set
             {
@@ -122,7 +122,7 @@ namespace VP_CALC
         {
             get
             {
-                return cmbEnv.Text;
+                return cmbEnv.Text.Trim();
             }
             set
             {
@@ -158,6 +158,67 @@ namespace VP_CALC
                 txtN_Layers.Focus();
                 return;
             }
+            //----------Длина вала----------------
+             _str = txtLx.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtLx.Focus();
+                return;
+            }
+
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtLx.Focus();
+                return;
+            }
+            //----------Диаметр вала----------------
+            _str = txtD_vala.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Layers.Focus();
+                return;
+            }
+
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtD_vala.Focus();
+                return;
+            }
+            //----------Диаметр облицовки----------------
+            _str = txtD_Obl.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Layers.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtD_Obl.Focus();
+                return;
+            }
+            //----------Внутренний диаметр ----------------
+            _str = txtD_vnut.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Layers.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtD_vnut.Focus();
+                return;
+            }
+
+            DialogResult = true;
+            Close();
         }
     }
 }

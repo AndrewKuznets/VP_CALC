@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
-
 /// <summary>
 /// Класс всех входных данных по валопроводу
 /// </summary>
@@ -15,74 +13,83 @@ namespace VP_CALC
     /// <summary>
     /// Структура данных по одному элементу валопровода
     /// </summary>
-    struct defOne_elem_VP
+   public class defOne_elem_VP
     {
-        double Lx; // длина элемента по оси Х
-        double D2; //  диаметр облицовки
-        double D3; // внутренний диаметр вала на элементе
-        string Mat1; // имя первого материала
-        string Mat2; // имя второго материала
-        string Env; // окружающая среда
-        string Comment;// комментарий по элементу
+        public int    N_elem { get; set; } // номер элемента
+        public double Lx { get; set; } // длина элемента по оси Х
+        public double D_vala { get; set;} // длина элемента по оси Х
+        public double D2 { get; set; } //  диаметр облицовки
+        public double D3 { get; set; } // внутренний диаметр вала на элементе
+        public int N_Layers { get; set;} // число слоёв
+        public string Mat1 { get; set; } // имя первого материала
+        public string Mat2 { get; set; } // имя второго материала
+        public string Env { get; set; } // окружающая среда
+        public string Comment { get; set;}// комментарий по элементу
     }
     /// <summary>
     /// Структура данных по одной сосредоточенной силе
     /// </summary>
-    struct defOne_force
+    public class defOne_force
     {
-        int N_elem; //номер элемента приложения силы
-        double Value; //  значение силы
-        string Env; //  окружающая среда приложения силы
-        string Comment;// комментарий по силе 
+        public int N_force { get; set;} //номер силы
+        public int N_elem { get; set; } //номер элемента приложения силы
+        public double Value { get; set; } //  значение силы
+        public string Env { get; set; } //  окружающая среда приложения силы
+        public string Comment { get; set; }// комментарий по силе 
     }
 
     /// <summary>
     /// Структура данных по одному материалу
     /// </summary>
-    struct defOne_mat
+    public class defOne_mat
     {
-        string Mat_name; //имя материала
-        double Mod_upr; //  модуль упругости
-        double Mod_sdv; //  модуль сдвига
-        double Densi;// плотность
+        public int N_mat { get; set;} //номер материала
+        public string Mat_name { get; set; } //имя материала
+        public double Mod_upr { get; set; } //  модуль упругости
+        public double Mod_sdv { get; set; } //  модуль сдвига
+        public double Densi { get; set; }// плотность
     }
 
     /// <summary>
     /// Структура данных по одому изгибающему моменту
     /// </summary>
-    struct defOne_moment
+    public class defOne_moment
     {
-        int N_elem; //номер элемента приложения момента
-        double Value; //  значение момента
-        string Comment;// комментарий по моменту
+        public int N_moment { get; set; } //номер момента
+        public int N_elem { get; set; } //номер элемента приложения момента
+        public double Value { get; set; } //  значение момента
+        public string Comment { get; set; }// комментарий по моменту
     }
 
     /// <summary>
     /// Структура данных по одной протяжённой опоре
     /// </summary>
-    struct defOne_prot_opor
+    public class defOne_prot_opor
     {
-        int N_elem; //номер первого элемента над опорой
-        int Kol_elems; // количество элементов над опорой
-        double Tg; //  тангенс угла наклона
-        double Sm_korm; // кормовое смещение
-        double DZ; //  Диаметральный зазор
-        double T_upr_osn;// Толщина упругого основания
-        string Comment;// комментарий по опоре
+        public int N_prot_opor { get; set; } //номер протяжённой опоры
+        public int N_elem { get; set; } //номер первого элемента над опорой
+        public int Kol_elems { get; set; } // количество элементов над опорой
+        public double Tg { get; set; } //  тангенс угла наклона
+        public double Sm_korm { get; set; } // кормовое смещение
+        public double DZ { get; set; } //  Диаметральный зазор
+        public double T_upr_osn { get; set; }// Толщина упругого основания
+        public string Comment { get; set; }// комментарий по опоре
     }
 
     /// <summary>
     /// Структура данных по одной точечной опоре
     /// </summary>
-    struct defOne_dot_opor
+    public class defOne_dot_opor
     {
-        int N_elem; //номер элемента приложения над опорой
-        double Sm_korm; // кормовое смещение
-        string Comment;// комментарий по опоре
+        public int N_dot_opor { get; set; } //номер точечной опоры
+        public int N_elem { get; set; } //номер элемента приложения над опорой
+        public double Sm_korm { get; set; } // кормовое смещение
+        public string Comment { get; set; }// комментарий по опоре
     }
 
-    partial class VP_INPUT_DATA
+    public class VP_INPUT_DATA
     {
+        public string CalcName; // имя расчёта
         public int N_SmOpor; // количество смещаемых опор
         public int N_TypeDP; // число типов дейдвудных подшипников
         public int N_TypeMat; // число типов материалов
@@ -91,11 +98,9 @@ namespace VP_CALC
         public bool print_Sm_Elems; // печать смещений элементов
         public string LangPrint; // язык печати
         public List<defOne_elem_VP> Elems_VP = new List<defOne_elem_VP>(); //элементы валопровода
-        public List<defOne_force> Forces; // сосредоточенные силы
-        public List<defOne_moment> Moments; // изгибающие моменты
-        public List<defOne_prot_opor> Prot_opors; // пртяжённые опорыо
-        public List<defOne_dot_opor> Dot_opors; // точечные опоры
+        public List<defOne_force> Forces = new List<defOne_force>(); // сосредоточенные силы
+        public List<defOne_moment> Moments = new List<defOne_moment>() ; // изгибающие моменты
+        public List<defOne_prot_opor> Prot_opors = new List<defOne_prot_opor>(); // пртяжённые опоры
+        public List<defOne_dot_opor> Dot_opors = new List<defOne_dot_opor>(); // точечные опоры
     }
-
-
 }
