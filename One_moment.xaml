@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VP_CALC"
         mc:Ignorable="d"
-        Title="Параметры изгибающего момента" Height="300" Width="600" WindowStartupLocation="CenterScreen" Topmost="True">
+        Title="Параметры изгибающего момента" Height="300" Width="600" WindowStartupLocation="CenterScreen" Topmost="True" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="lblN_VP" Content="приложен к элементу ВП №" HorizontalAlignment="Left" Margin="295,57,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblMom_value" Content="Величина, кг*см" HorizontalAlignment="Left" Margin="61,108,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
@@ -15,8 +15,8 @@
         <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="487,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
         <TextBox x:Name="txtValueMoment" HorizontalAlignment="Left" Height="23" Margin="220,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
         <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="220,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="323"/>
-        <Button x:Name="btnOk" Content="Ок" Margin="413,240,105.6,11.4" IsDefault="True"/>
-        <Button x:Name="btnCancel" Content="Отмена" Margin="499,240,19.6,11.4" IsDefault="True"/>
+        <Button x:Name="btnOk" Content="Ок" Margin="413,229,105.6,0" IsDefault="True" Click="btnOk_Click" Height="30" VerticalAlignment="Top"/>
+        <Button x:Name="btnCancel" Content="Отмена" Margin="499,229,0,0" IsDefault="True" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
 
     </Grid>
 </Window>

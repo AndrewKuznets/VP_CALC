@@ -249,7 +249,7 @@ namespace VP_CALC
 // Добавить силу
         private void btnAddForce_Click(object sender, RoutedEventArgs e)
         {
-            // Вызываем окно ввода имени данных по  элементу ВП
+            // Вызываем окно ввода имени данных по параметрам силы
             One_force dialog = new One_force();
 
             dialog.N_Force = vp_input_data.Forces.Count + 1;
@@ -327,7 +327,7 @@ namespace VP_CALC
 
             if (dgrForces.SelectedItem == null)
             {
-                MessageBox.Show("Отметьте силу в таблице  !",
+                MessageBox.Show("Отметьте силу в таблице!",
                     "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
             }
             int SI = dgrForces.SelectedIndex;
@@ -367,6 +367,124 @@ namespace VP_CALC
 
             vp_input_data.Forces = newForces;
             txtN_forces.Text = vp_input_data.Forces.Count.ToString();
+        }
+// Добавить момент
+        private void btnAddMom_Click(object sender, RoutedEventArgs e)
+        {
+            // Вызываем окно ввода имени данных по параметрам момента
+            One_moment dialog = new One_moment();
+
+            dialog.N_Moment = vp_input_data.Moments.Count + 1;
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+
+            defOne_moment newOneMoment = new defOne_moment
+            {
+                N_moment = vp_input_data.Moments.Count + 1,
+                N_elem = dialog.N_Elem,
+                Value = dialog.ValueMoment,
+                Comment = dialog.Comm
+            };
+
+            dgrMoments.Items.Add(newOneMoment);
+            vp_input_data.Moments.Add(newOneMoment);
+
+            txtN_moments.Text = vp_input_data.Moments.Count.ToString();
+        }
+// Редактировать момент
+        private void btnEditMom_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrMoments.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте момент в таблице!",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+
+            int SI = dgrMoments.SelectedIndex;
+            // Извлечём из отмеченной строки DataGrid  атрибуты параметра
+
+            string[] AttribPar = new string[4];
+
+            for (int iAttr = 0; iAttr < AttribPar.Length; iAttr++)
+            {
+                int Number_nameCOL = iAttr; // номер столбца DataGrid c именем параметра
+                var _cell = new DataGridCellInfo(dgrMoments.SelectedItem, dgrMoments.Columns[Number_nameCOL]);
+                var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+                AttribPar[iAttr] = cell_content.Text.Trim();
+            }
+
+            int N_Moment = Convert.ToInt32(AttribPar[0]);
+            // Вызываем окно редактирования параметра элемента Словаря
+            One_moment dialog = new One_moment();
+            // Инициализируем значения атрибутов
+            dialog.N_Moment = N_Moment;
+            dialog.N_Elem = Convert.ToInt32(AttribPar[1]);
+            dialog.ValueMoment = Convert.ToInt32(AttribPar[2]);
+            dialog.Comm = AttribPar[3].Trim();
+
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+
+            defOne_moment newOneMoment = new defOne_moment
+            {
+                N_moment = vp_input_data.Moments.Count,
+                N_elem = dialog.N_Elem,
+                Value = dialog.ValueMoment,
+                Comment = dialog.Comm
+            };
+
+            vp_input_data.Moments.Insert(N_Moment - 1, newOneMoment);
+            vp_input_data.Moments.RemoveAt(N_Moment);
+
+            dgrMoments.Items.Insert(N_Moment - 1, newOneMoment);
+            dgrMoments.Items.RemoveAt(N_Moment);
+            dgrMoments.SelectedIndex = N_Moment - 1;
+        }
+// Удаляем момент из таблицы
+        private void btnDelMom_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrMoments.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте момент в таблице!",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+            int SI = dgrMoments.SelectedIndex;
+
+            // Извлечём из отмеченной строки DataGrid  номер момента
+            string N_Moment_str;
+            var _cell = new DataGridCellInfo(dgrMoments.SelectedItem, dgrMoments.Columns[0]);
+            var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+            N_Moment_str = cell_content.Text.Trim();
+
+            int N_Moment = Convert.ToInt32(N_Moment_str);
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show("Удалим момент № " + N_Moment_str + " ? ", "Внимание!", buttons);
+            if (result == MessageBoxResult.No) return;
+            // Сформируем новую коллекцию моментов
+
+            List<defOne_moment> newMoments = new List<defOne_moment>();
+            dgrMoments.Items.Clear();
+            defOne_moment newOne_Moment;
+
+            for (int ii = 0; ii < vp_input_data.Moments.Count; ii++)
+            {
+                if (ii < N_Moment - 1)
+                {
+                    newMoments.Add(vp_input_data.Moments[ii]);
+                    dgrMoments.Items.Add(vp_input_data.Moments[ii]);
+                }
+                else if (ii == N_Moment - 1) continue;
+                else
+                {
+                    newOne_Moment = vp_input_data.Moments[ii];
+                    newOne_Moment.N_moment = ii;
+                    newMoments.Add(newOne_Moment);
+                    dgrMoments.Items.Add(newOne_Moment);
+                }
+            } // for
+
+            vp_input_data.Moments = newMoments;
+            txtN_moments.Text = vp_input_data.Moments.Count.ToString();
         }
     }
 }

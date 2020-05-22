@@ -45,7 +45,7 @@ namespace VP_CALC
             }
         }
         // Свойство для значения момента
-        public double ValueForce
+        public double ValueMoment
         {
             get
             {
@@ -68,6 +68,42 @@ namespace VP_CALC
             {
                 txtComm.Text = value.Trim();
             }
+        }
+// Обработка кнопки Ок для момента
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            string _str;
+            //----------Номер элемента----------------
+            _str = txtN_Elem.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+            //----------Величина силы----------------
+            _str = txtValueMoment.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtValueMoment.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtValueMoment.Focus();
+                return;
+            }
+
+            DialogResult = true;
+            Close();
         }
     }
 }

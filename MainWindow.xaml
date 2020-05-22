@@ -40,7 +40,7 @@
                         <DataGrid.DataContext>
                             <local:defOne_elem_VP/>
                         </DataGrid.DataContext>
-                        
+
                         <DataGrid.Columns>
                             <DataGridTextColumn  Header="№" Binding="{Binding Path= N_elem}" />
                             <DataGridTextColumn  Header="Длина,мм" Binding="{Binding Path=Lx}" />
@@ -77,14 +77,14 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Нагрузка">
-                <Grid Background="#FFE5E5E5" Margin="10,-4,-88.2,4.2">
+                <Grid Background="#FFE5E5E5" Margin="31,12,12.2,13.2">
                     <Grid.DataContext>
                         <local:defOne_force/>
                     </Grid.DataContext>
 
                     <Label x:Name="lbl" Content="Сосредоточенные силы, всего" HorizontalAlignment="Left" Margin="43,28,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold"/>
-                    <DataGrid x:Name="dgrForces" HorizontalAlignment="Left" Margin="43,79,0,0" VerticalAlignment="Top" 
-                              AutoGenerateColumns="False" IsReadOnly="True" Width="338" Height="111">
+                    <DataGrid x:Name="dgrForces" HorizontalAlignment="Left" Margin="43,70,0,0" VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" IsReadOnly="True" Width="338" Height="150">
                         <DataGrid.DataContext>
                             <local:defOne_force/>
                         </DataGrid.DataContext>
@@ -96,22 +96,27 @@
                             <DataGridTextColumn Binding="{Binding Path = Comment}" Header="Комментарий"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Label x:Name="lblbendMoms" Content="Изгибающие моменты" HorizontalAlignment="Left" Margin="43,247,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold"/>
-                    <DataGrid x:Name="dgrBendMoms" HorizontalAlignment="Left" Margin="52,294,0,0" VerticalAlignment="Top" Width="263" Height="86">
+                    <Label x:Name="lblbendMoms" Content="Изгибающие моменты, всего" HorizontalAlignment="Left" Margin="43,247,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold"/>
+                    <DataGrid x:Name="dgrMoments" HorizontalAlignment="Left" Margin="52,284,0,0"
+                              IsReadOnly="True" VerticalAlignment="Top" Width="313" Height="110" SelectedIndex="0">
+                        <DataGrid.DataContext>
+                            <local:defOne_moment/>
+                        </DataGrid.DataContext>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№ эл-та"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Момента"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Комментарий"/>
+                            <DataGridTextColumn Binding="{Binding N_moment}" ClipboardContentBinding="{x:Null}" Header="№"/>
+                            <DataGridTextColumn Binding="{Binding N_elem}" ClipboardContentBinding="{x:Null}" Header="№ эл-та"/>
+                            <DataGridTextColumn Binding="{Binding Value}" ClipboardContentBinding="{x:Null}" Header="Момент,кг*см"/>
+                            <DataGridTextColumn Binding="{Binding Comment}" ClipboardContentBinding="{x:Null}" Header="Комментарий    "/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnAddForce" Content="Добавить силу" HorizontalAlignment="Left" Margin="443,79,0,0" VerticalAlignment="Top" Width="89" ToolTip="Добавить силу в таблицу" Height="24" Click="btnAddForce_Click"/>
                     <Button x:Name="btnEditForce" Content="Исправить" HorizontalAlignment="Left" Margin="443,116,0,0" VerticalAlignment="Top" Width="75" ToolTip="Исправить параметры силы" Click="btnEditForce_Click"/>
                     <Button x:Name="btnDelForce" Content="Удалить" HorizontalAlignment="Left" Margin="443,154,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.563,5.043" ToolTip="Удалить силу из таблицы" Click="btnDelForce_Click"/>
-                    <Button x:Name="btnAddMom" Content="Добавить момент" HorizontalAlignment="Left" Margin="383,294,0,0" VerticalAlignment="Top" Width="113" RenderTransformOrigin="0.253,12.62"/>
-                    <Button x:Name="btnEditMom" Content="Исправить" HorizontalAlignment="Left" Margin="383,330,0,0" VerticalAlignment="Top" Width="75" ToolTip="Исправить параметры моменты"/>
-                    <Button x:Name="btnDelMom" Content="Удалить" HorizontalAlignment="Left" Margin="383,361,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.563,5.043" ToolTip="Удалить момент из таблицы"/>
-                    <TextBox x:Name="txtN_forces" HorizontalAlignment="Left" Height="23" Margin="238,32,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="42" IsEnabled="False"/>
+                    <Button x:Name="btnAddMom" Content="Добавить момент" HorizontalAlignment="Left" Margin="383,287,0,0" VerticalAlignment="Top" Width="113" RenderTransformOrigin="0.253,12.62" Click="btnAddMom_Click"/>
+                    <Button x:Name="btnEditMom" Content="Исправить" HorizontalAlignment="Left" Margin="383,321,0,0" VerticalAlignment="Top" Width="75" ToolTip="Исправить параметры моменты" RenderTransformOrigin="0.539,1.26" Click="btnEditMom_Click"/>
+                    <Button x:Name="btnDelMom" Content="Удалить" HorizontalAlignment="Left" Margin="383,356,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.563,5.043" ToolTip="Удалить момент из таблицы" Click="btnDelMom_Click"/>
+                    <TextBox x:Name="txtN_forces" HorizontalAlignment="Left" Height="23" Margin="238,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" IsEnabled="False" UndoLimit="98"/>
+                    <TextBox x:Name="txtN_moments" HorizontalAlignment="Left" Height="23" Margin="233,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Опоры">
