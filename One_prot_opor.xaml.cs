@@ -45,15 +45,15 @@ namespace VP_CALC
             }
         }
         // Свойство для количества элементов ВП над опорой
-        public int Kol_elem
+        public int Kol_Elems
         {
             get
             {
-                return Convert.ToInt32(txtKol_elem.Text);
+                return Convert.ToInt32(txtKol_Elem.Text);
             }
             set
             {
-                txtKol_elem.Text = value.ToString();
+                txtKol_Elem.Text = value.ToString();
             }
         }
         // Свойство для тангенса угла наклона
@@ -116,7 +116,105 @@ namespace VP_CALC
                 txtComm.Text = value.Trim();
             }
         }
+/// <summary>
+/// Обработка кромки Ok
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            string _str;
+            //----------Номер элемента----------------
+            _str = txtN_Elem.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+           //----------Количество элементов----------------
+            _str = txtKol_Elem.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtKol_Elem.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtKol_Elem.Focus();
+                return;
+            }
 
+            //----------Тангенс угла наклона----------------
+            _str = txtTG_UN.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtTG_UN.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtTG_UN.Focus();
+                return;
+            }
+            //----------Смещение кормовое----------------
+            _str = txtSm_korm.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtSm_korm.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtSm_korm.Focus();
+                return;
+            }
 
+            //----------Диаметральный зазор--------------
+            _str = txtDZ.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtDZ.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtDZ.Focus();
+                return;
+            }
+
+            //----------Упругое основание-----------
+            _str = txtUpr_osn.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtUpr_osn.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtUpr_osn.Focus();
+                return;
+            }
+
+            DialogResult = true;
+            Close();
+
+        }
     }
 }

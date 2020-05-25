@@ -121,22 +121,26 @@
             </TabItem>
             <TabItem Header="Опоры">
                 <Grid Background="#FFE5E5E5">
-                    <Label x:Name="lblProtOpor" Content="Протяжённые опоры" HorizontalAlignment="Left" Margin="198,38,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <DataGrid x:Name="dtgProtOpors" HorizontalAlignment="Left" Margin="198,78,0,0" VerticalAlignment="Top" Width="544" Height="151">
+                    <Label x:Name="lblProtOpor" Content="Протяжённые опоры, всего " HorizontalAlignment="Left" Margin="198,38,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="176"/>
+                    <DataGrid x:Name="dgrProtOpors" HorizontalAlignment="Left" Margin="55,78,0,0" VerticalAlignment="Top" Width="716" Height="151">
+                        <DataGrid.DataContext>
+                            <local:defOne_prot_opor/>
+                        </DataGrid.DataContext>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№ эл-та"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Кол-во эл-тов"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="ТангУглаНакл"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="СмещКорм,мм"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="ДиамЗазор,мм"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="ТолщУпрОсн,мм"/>
+                            <DataGridTextColumn Binding="{Binding N_prot_opor}"  Header="№"/>
+                            <DataGridTextColumn Binding="{Binding N_elem}"  Header="№ эл-та"/>
+                            <DataGridTextColumn Binding="{Binding Kol_elems}" Header="Кол-во эл-тов"/>
+                            <DataGridTextColumn Binding="{Binding Tg}" Header="ТангУглаНакл"/>
+                            <DataGridTextColumn Binding="{Binding Sm_korm}" Header="СмещКорм,мм"/>
+                            <DataGridTextColumn Binding="{Binding DZ}"  Header="ДиамЗазор,мм"/>
+                            <DataGridTextColumn Binding="{Binding T_upr_osn}" Header="ТолщУпрОсн,мм"/>
+                            <DataGridTextColumn Binding="{Binding Comment}"  Header="Комментарий   "/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btnAddProtOpor" Content="Добавить опору" HorizontalAlignment="Left" Margin="776,81,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.509,3"/>
-                    <Button x:Name="btnEditProtOpor" Content="Исправить" HorizontalAlignment="Left" Margin="776,118,0,0" VerticalAlignment="Top" Width="110" ToolTip="Исправить параметры протяжённой  опоры"/>
-                    <Button x:Name="btnDelProtOpor" Content="Удалить" HorizontalAlignment="Left" Margin="776,163,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.458,5.062" ToolTip="Удалить протяжённую опору из таблицы"/>
-                    <Label x:Name="lblDotOpor" Content="Точечные опоры" HorizontalAlignment="Left" Margin="198,259,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.365,9.578"/>
+                    <Button x:Name="btnAddProtOpor" Content="Добавить опору" HorizontalAlignment="Left" Margin="776,81,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.509,3" Click="btnAddProtOpor_Click"/>
+                    <Button x:Name="btnEditProtOpor" Content="Исправить" HorizontalAlignment="Left" Margin="776,118,0,0" VerticalAlignment="Top" Width="110" ToolTip="Исправить параметры протяжённой  опоры" Click="btnEditProtOpor_Click"/>
+                    <Button x:Name="btnDelProtOpor" Content="Удалить" HorizontalAlignment="Left" Margin="776,163,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.458,5.062" ToolTip="Удалить протяжённую опору из таблицы" Click="btnDelProtOpor_Click"/>
+                    <Label x:Name="lblDotOpor" Content="Точечные опоры, всего" HorizontalAlignment="Left" Margin="198,259,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.365,9.578" Width="153"/>
                     <DataGrid x:Name="dtgDotOpors" HorizontalAlignment="Left" Margin="198,298,0,0" VerticalAlignment="Top" Width="465" RenderTransformOrigin="0.502,-0.562" Height="91">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="№"/>
@@ -149,6 +153,8 @@
                     <Button x:Name="btnAddDotOpor" Content="Добавить опору" HorizontalAlignment="Left" Margin="776,301,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.64,6.792" ToolTip="Добавить точечную опору"/>
                     <Button x:Name="btnEditDotOpor" Content="Исправить" HorizontalAlignment="Left" Margin="776,334,0,0" VerticalAlignment="Top" Width="110" ToolTip="Исправить параметры точечной опоры" RenderTransformOrigin="0.567,4.323"/>
                     <Button x:Name="btnDelDotOpor" Content="Удалить" HorizontalAlignment="Left" Margin="776,374,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.458,5.062" ToolTip="Удалить точечную опору из таблицы"/>
+                    <TextBox x:Name="txtProtOpors" HorizontalAlignment="Left" Height="23" Margin="379,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtDotOpors" HorizontalAlignment="Left" Height="23" Margin="356,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="39" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Результаты расчёта">

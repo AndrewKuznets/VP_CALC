@@ -307,7 +307,7 @@ namespace VP_CALC
 
             defOne_force newOneForce = new defOne_force
             {
-                N_force = vp_input_data.Forces.Count,
+                N_force = N_Force,
                 N_elem = dialog.N_Elem,
                 Value = dialog.ValueForce,
                 Env = dialog.Env,
@@ -427,7 +427,7 @@ namespace VP_CALC
 
             defOne_moment newOneMoment = new defOne_moment
             {
-                N_moment = vp_input_data.Moments.Count,
+                N_moment = N_Moment,
                 N_elem = dialog.N_Elem,
                 Value = dialog.ValueMoment,
                 Comment = dialog.Comm
@@ -485,6 +485,148 @@ namespace VP_CALC
 
             vp_input_data.Moments = newMoments;
             txtN_moments.Text = vp_input_data.Moments.Count.ToString();
+        }
+/// <summary>
+/// Добавить протяжённую опору
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnAddProtOpor_Click(object sender, RoutedEventArgs e)
+        {
+            // Вызываем окно ввода  данных по протяжённой опоре
+            Prot_opor dialog = new Prot_opor();
+
+            dialog.N_prot_opor = vp_input_data.Prot_opors.Count + 1;
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+
+            defOne_prot_opor newOneProtOpor = new defOne_prot_opor
+            {
+                N_prot_opor = vp_input_data.Prot_opors.Count + 1,
+                N_elem = dialog.N_Elem,
+                Kol_elems = dialog.Kol_Elems,
+                Tg = dialog.TG_UN,
+                Sm_korm = dialog.Sm_korm,
+                DZ = dialog.DZ,
+                T_upr_osn = dialog.Upr_osn,
+                Comment = dialog.Comm
+            };
+
+            dgrProtOpors.Items.Add(newOneProtOpor);
+            vp_input_data.Prot_opors.Add(newOneProtOpor);
+
+            txtProtOpors.Text = vp_input_data.Prot_opors.Count.ToString();
+        }
+/// <summary>
+/// Исправить данные о протяжённой опоре
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnEditProtOpor_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrProtOpors.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте протяжённую опору в таблице  !",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+
+            int SI = dgrProtOpors.SelectedIndex;
+            // Извлечём из отмеченной строки DataGrid  атрибуты прот. опоры
+
+            string[] AttribPar = new string[8];
+
+            for (int iAttr = 0; iAttr < AttribPar.Length; iAttr++)
+            {
+                int Number_nameCOL = iAttr; // номер столбца DataGrid c именем параметра
+                var _cell = new DataGridCellInfo(dgrProtOpors.SelectedItem, dgrProtOpors.Columns[Number_nameCOL]);
+                var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+                AttribPar[iAttr] = cell_content.Text.Trim();
+            }
+
+            int N_prot_opor = Convert.ToInt32(AttribPar[0]);
+            // Вызываем окно редактирования параметра элемента Словаря
+            Prot_opor dialog = new Prot_opor();
+            // Инициализируем значения атрибутов
+            dialog.N_prot_opor = N_prot_opor;
+            dialog.N_Elem = Convert.ToInt32(AttribPar[1]);
+            dialog.Kol_Elems = Convert.ToInt32(AttribPar[2]);
+            dialog.TG_UN = Convert.ToDouble(AttribPar[3]);
+            dialog.Sm_korm = Convert.ToDouble(AttribPar[4]);
+            dialog.DZ = Convert.ToDouble(AttribPar[5]);
+            dialog.Upr_osn = Convert.ToDouble(AttribPar[6]);
+            dialog.Comm = AttribPar[7].Trim();
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+            // Контекст новых данных по опоре
+            defOne_prot_opor newOneProtOpor = new defOne_prot_opor
+            {
+                N_prot_opor = N_prot_opor,
+                N_elem = dialog.N_Elem,
+                Kol_elems = dialog.Kol_Elems,
+                Tg = dialog.TG_UN,
+                Sm_korm = dialog.Sm_korm,
+                DZ = dialog.DZ,
+                T_upr_osn = dialog.Upr_osn,
+                Comment = dialog.Comm
+            };
+
+            vp_input_data.Prot_opors.Insert(N_prot_opor - 1, newOneProtOpor);
+            vp_input_data.Prot_opors.RemoveAt(N_prot_opor);
+
+            dgrProtOpors.Items.Insert(N_prot_opor - 1, newOneProtOpor);
+            dgrProtOpors.Items.RemoveAt(N_prot_opor);
+            dgrProtOpors.SelectedIndex = N_prot_opor - 1;
+        }
+/// <summary>
+/// Удалим прот. опору в списке
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnDelProtOpor_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (dgrProtOpors.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте силу в таблице!",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+            int SI = dgrProtOpors.SelectedIndex;
+
+            // Извлечём из отмеченной строки DataGrid  номер силы
+            string N_Prot_opor_str;
+            var _cell = new DataGridCellInfo(dgrProtOpors.SelectedItem, dgrProtOpors.Columns[0]);
+            var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+            N_Prot_opor_str = cell_content.Text.Trim();
+
+            int N_Prot_opor = Convert.ToInt32(N_Prot_opor_str);
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show("Удалим протяжённую опору № " + N_Prot_opor_str + " ? ", "Внимание!", buttons);
+            if (result == MessageBoxResult.No) return;
+            // Удалим элемент из коллекции
+
+            List<defOne_prot_opor> newProt_opors = new List<defOne_prot_opor>();
+            dgrProtOpors.Items.Clear();
+            defOne_prot_opor newOne_Prot_opor;
+
+            for (int ii = 0; ii < vp_input_data.Prot_opors.Count; ii++)
+            {
+                if (ii < N_Prot_opor - 1)
+                {
+                    newProt_opors.Add(vp_input_data.Prot_opors[ii]);
+                    dgrProtOpors.Items.Add(vp_input_data.Prot_opors[ii]);
+                }
+                else if (ii == N_Prot_opor - 1) continue;
+                else
+                {
+                    newOne_Prot_opor = vp_input_data.Prot_opors[ii];
+                    newOne_Prot_opor.N_prot_opor = ii;
+                    newProt_opors.Add(newOne_Prot_opor);
+                    dgrProtOpors.Items.Add(newOne_Prot_opor);
+                }
+            } // for
+
+            vp_input_data.Prot_opors = newProt_opors;
+            txtProtOpors.Text = vp_input_data.Prot_opors.Count.ToString();
         }
     }
 }

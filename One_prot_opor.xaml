@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VP_CALC"
         mc:Ignorable="d"
-        Title="Параметры протяжённой опоры" Height="300" Width="700" WindowStartupLocation="CenterScreen">
+        Title="Параметры протяжённой опоры" Height="300" Width="700" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="lblN_prot_opor" Content="Протяжённая опора №" HorizontalAlignment="Left" Margin="38,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Label x:Name="lblN_VP" Content="Первый элемент ВП №" HorizontalAlignment="Left" Margin="250,46,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
@@ -17,14 +17,14 @@
         <Label x:Name="lblPO_comment" Content="Комментарий" HorizontalAlignment="Left" Margin="38,210,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <TextBox x:Name="txtN_prot_opor" HorizontalAlignment="Left" Height="23" Margin="190,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
         <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="407,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
-        <TextBox x:Name="txtKol_elem" HorizontalAlignment="Left" Height="23" Margin="628,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
+        <TextBox x:Name="txtKol_Elem" HorizontalAlignment="Left" Height="23" Margin="628,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" RenderTransformOrigin="5.158,0.739"/>
         <TextBox x:Name="txtTG_UN" HorizontalAlignment="Left" Height="23" Margin="190,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"/>
         <TextBox x:Name="txtSm_korm" HorizontalAlignment="Left" Height="23" Margin="426,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
         <TextBox x:Name="txtDZ" HorizontalAlignment="Left" Height="23" Margin="208,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" RenderTransformOrigin="5.818,0.67"/>
         <TextBox x:Name="txtUpr_osn" HorizontalAlignment="Left" Height="23" Margin="426,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="44" RenderTransformOrigin="5.818,0.67"/>
         <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="159,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="305" RenderTransformOrigin="5.818,0.67"/>
-        <Button x:Name="btnOk" Content="Ok" Margin="506,230,112.6,21.4" IsDefault="True" ToolTip="Сохранить данные и выйти"/>
-        <Button x:Name="btnCancel" Content="Отмена" Margin="594,230,24.6,21.4" IsCancel="True" ToolTip="Выйти без сохранения"/>
+        <Button x:Name="btnOk" Content="Ok" Margin="506,0,0,21.4" IsDefault="True" ToolTip="Сохранить данные и выйти" Click="btnOk_Click" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="66"/>
+        <Button x:Name="btnCancel" Content="Отмена" Margin="594,0,0,21.4" IsCancel="True" ToolTip="Выйти без сохранения" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="72"/>
 
     </Grid>
 </Window>
