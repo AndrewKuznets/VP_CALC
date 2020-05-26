@@ -33,7 +33,7 @@ namespace VP_CALC
         }
 
         // Свойство для имени материала
-        public string Mat1
+        public string Mat_name
         {
             get
             {
@@ -81,7 +81,75 @@ namespace VP_CALC
                 txtDensi.Text = value.ToString();
             }
         }
+/// <summary>
+/// Обработка кнопки Ok
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            string _str;
+            //----------Номер материала---------------
+            _str = txtN_mat.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_mat.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtN_mat.Focus();
+                return;
+            }
+            //---------Модуль упругости--------------
+            _str = txtMod_upr.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtMod_upr.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtMod_upr.Focus();
+                return;
+            }
+            //---------Модуль сдвига --------------
+            _str = txtMod_sdv.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtMod_sdv.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtMod_sdv.Focus();
+                return;
+            }
+
+            //---------Плотность  --------------
+            _str = txtDensi.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtDensi.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtDensi.Focus();
+                return;
+            }
 
 
+            DialogResult = true;
+            Close();
+        }
     }
 }

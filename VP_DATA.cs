@@ -86,7 +86,9 @@ namespace VP_CALC
         public double Sm_korm { get; set; } // кормовое смещение
         public string Comment { get; set; }// комментарий по опоре
     }
-
+/// <summary>
+/// Все данные по одному валопроводу!
+/// </summary>
     public class VP_INPUT_DATA
     {
         public string CalcName; // имя расчёта
@@ -102,5 +104,13 @@ namespace VP_CALC
         public List<defOne_moment> Moments = new List<defOne_moment>() ; // изгибающие моменты
         public List<defOne_prot_opor> Prot_opors = new List<defOne_prot_opor>(); // пртяжённые опоры
         public List<defOne_dot_opor> Dot_opors = new List<defOne_dot_opor>(); // точечные опоры
+    }
+
+/// <summary>
+/// Все материалы по валопроводам
+/// </summary>
+    public class MATERIALS
+    {
+       public List<defOne_mat> All_mats = new List<defOne_mat>(); // все материалы по валопроводам
     }
 }

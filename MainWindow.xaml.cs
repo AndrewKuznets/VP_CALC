@@ -23,6 +23,8 @@ namespace VP_CALC
     {
         // Создадим хранилище всех данных по валопроводу!
         public VP_INPUT_DATA vp_input_data = new VP_INPUT_DATA();
+        // Создадим хранилище всех данных по материалам валопроводов!
+        public MATERIALS materials = new MATERIALS();
 
         public MainWindow()
         {
@@ -627,6 +629,267 @@ namespace VP_CALC
 
             vp_input_data.Prot_opors = newProt_opors;
             txtProtOpors.Text = vp_input_data.Prot_opors.Count.ToString();
+        }
+/// <summary>
+/// Добавление точечной опоры
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnAddDotOpor_Click(object sender, RoutedEventArgs e)
+        {
+            // Вызываем окно ввода  данных по протяжённой опоре
+            One_dot_opor dialog = new One_dot_opor();
+
+            dialog.N_dot_opor = vp_input_data.Dot_opors.Count + 1;
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+
+            defOne_dot_opor newOneDotOpor = new defOne_dot_opor
+            {
+                N_dot_opor = vp_input_data.Dot_opors.Count + 1,
+                N_elem = dialog.N_Elem,
+                Sm_korm = dialog.Sm_korm,
+                Comment = dialog.Comm
+            };
+
+            dgrDotOpors.Items.Add(newOneDotOpor);
+            vp_input_data.Dot_opors.Add(newOneDotOpor);
+
+            txtDotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+        }
+/// <summary>
+/// Исправить данные точечной опоры
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnEditDotOpor_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrDotOpors.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте точечную опору в таблице  !",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+
+            int SI = dgrDotOpors.SelectedIndex;
+            // Извлечём из отмеченной строки DataGrid  атрибуты прот. опоры
+
+            string[] AttribPar = new string[4];
+
+            for (int iAttr = 0; iAttr < AttribPar.Length; iAttr++)
+            {
+                int Number_nameCOL = iAttr; // номер столбца DataGrid c именем параметра
+                var _cell = new DataGridCellInfo(dgrDotOpors.SelectedItem, dgrDotOpors.Columns[Number_nameCOL]);
+                var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+                AttribPar[iAttr] = cell_content.Text.Trim();
+            }
+
+            int N_dot_opor = Convert.ToInt32(AttribPar[0]);
+            // Вызываем окно редактирования параметра элемента Словаря
+            One_dot_opor dialog = new One_dot_opor();
+            // Инициализируем значения атрибутов
+            dialog.N_dot_opor = N_dot_opor;
+            dialog.N_Elem = Convert.ToInt32(AttribPar[1]);
+            dialog.Sm_korm = Convert.ToDouble(AttribPar[2]);
+            dialog.Comm = AttribPar[3].Trim();
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+            // Контекст новых данных по опоре
+            defOne_dot_opor newOneDotOpor = new defOne_dot_opor
+            {
+                N_dot_opor = N_dot_opor,
+                N_elem = dialog.N_Elem,
+                Sm_korm = dialog.Sm_korm,
+                Comment = dialog.Comm
+            };
+
+            vp_input_data.Dot_opors.Insert(N_dot_opor - 1, newOneDotOpor);
+            vp_input_data.Dot_opors.RemoveAt(N_dot_opor);
+
+            dgrDotOpors.Items.Insert(N_dot_opor - 1, newOneDotOpor);
+            dgrDotOpors.Items.RemoveAt(N_dot_opor);
+            dgrDotOpors.SelectedIndex = N_dot_opor - 1;
+        }
+/// <summary>
+/// Удалить точечную опору
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnDelDotOpor_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrDotOpors.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте точечную опору в таблице!",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+            int SI = dgrDotOpors.SelectedIndex;
+
+            // Извлечём из отмеченной строки DataGrid  номер силы
+            string N_Dot_opor_str;
+            var _cell = new DataGridCellInfo(dgrDotOpors.SelectedItem, dgrDotOpors.Columns[0]);
+            var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+            N_Dot_opor_str = cell_content.Text.Trim();
+
+            int N_Dot_opor = Convert.ToInt32(N_Dot_opor_str);
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show("Удалим точечную опору № " + N_Dot_opor_str + " ? ", "Внимание!", buttons);
+            if (result == MessageBoxResult.No) return;
+            // Удалим элемент из коллекции
+
+            List<defOne_dot_opor> newDot_opors = new List<defOne_dot_opor>();
+            dgrDotOpors.Items.Clear();
+            defOne_dot_opor newOneDotOpor = new defOne_dot_opor();
+
+            for (int ii = 0; ii < vp_input_data.Dot_opors.Count; ii++)
+            {
+                if (ii < N_Dot_opor - 1)
+                {
+                    newDot_opors.Add(vp_input_data.Dot_opors[ii]);
+                    dgrDotOpors.Items.Add(vp_input_data.Dot_opors[ii]);
+                }
+                else if (ii == N_Dot_opor - 1) continue;
+                else
+                {
+                    newOneDotOpor = vp_input_data.Dot_opors[ii];
+                    newOneDotOpor.N_dot_opor = ii;
+                    newDot_opors.Add(newOneDotOpor);
+                    dgrDotOpors.Items.Add(newOneDotOpor);
+                }
+            } // for
+
+            vp_input_data.Dot_opors = newDot_opors;
+            txtDotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+        }
+/// <summary>
+/// Добавить материал
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnAddOneMat_Click(object sender, RoutedEventArgs e)
+        {
+            // Вызываем окно ввода  данных по материалу
+            Mater_props dialog = new Mater_props();
+
+            dialog.N_mat = materials.All_mats.Count + 1;
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+
+            defOne_mat newOneMat = new defOne_mat
+            {
+                N_mat = materials.All_mats.Count + 1,
+                Mat_name = dialog.Mat_name,
+                Mod_sdv = dialog.Mod_sdv,
+                Mod_upr = dialog.Mod_upr,
+                Densi = dialog.Densi
+            };
+
+            dgrMatsProps.Items.Add(newOneMat);
+            materials.All_mats.Add(newOneMat);
+
+            txtN_mats.Text = materials.All_mats.Count.ToString();
+        }
+/// <summary>
+/// Исправить данные по материалу
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnEditOneMat_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrMatsProps.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте материал в таблице  !",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+
+            int SI = dgrMatsProps.SelectedIndex;
+            // Извлечём из отмеченной строки DataGrid  атрибуты прот. опоры
+
+            string[] AttribPar = new string[5];
+
+            for (int iAttr = 0; iAttr < AttribPar.Length; iAttr++)
+            {
+                int Number_nameCOL = iAttr; // номер столбца DataGrid c именем параметра
+                var _cell = new DataGridCellInfo(dgrMatsProps.SelectedItem, dgrMatsProps.Columns[Number_nameCOL]);
+                var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+                AttribPar[iAttr] = cell_content.Text.Trim();
+            }
+
+            int N_mat = Convert.ToInt32(AttribPar[0]);
+            // Вызываем окно редактирования параметра элемента Словаря
+            Mater_props dialog = new Mater_props();
+            // Инициализируем значения атрибутов
+            dialog.N_mat = N_mat;
+            dialog.Mat_name = AttribPar[1].Trim();
+            dialog.Mod_upr = Convert.ToDouble(AttribPar[2]);
+            dialog.Mod_sdv = Convert.ToDouble(AttribPar[3]);
+            dialog.Densi = Convert.ToDouble(AttribPar[4]);
+            dialog.ShowDialog();
+            if (dialog.DialogResult == false) return;
+            // Контекст новых данных по материалу
+            defOne_mat newOneMat = new defOne_mat
+            {
+                N_mat = N_mat,
+                Mat_name = dialog.Mat_name,
+                Mod_sdv = dialog.Mod_sdv,
+                Mod_upr = dialog.Mod_upr,
+                Densi = dialog.Densi
+            };
+
+            materials.All_mats.Insert(N_mat - 1, newOneMat);
+            materials.All_mats.RemoveAt(N_mat);
+
+            dgrMatsProps.Items.Insert(N_mat - 1, newOneMat);
+            dgrMatsProps.Items.RemoveAt(N_mat);
+            dgrMatsProps.SelectedIndex = N_mat - 1;
+        }
+/// <summary>
+/// Удалить материала
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnDelOneMat_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgrMatsProps.SelectedItem == null)
+            {
+                MessageBox.Show("Отметьте материал в таблице!",
+                    "Внимание!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
+            int SI = dgrMatsProps.SelectedIndex;
+
+            // Извлечём из отмеченной строки DataGrid  номер силы
+            string N_Mat_str;
+            var _cell = new DataGridCellInfo(dgrMatsProps.SelectedItem, dgrMatsProps.Columns[0]);
+            var cell_content = _cell.Column.GetCellContent(_cell.Item) as TextBlock;
+            N_Mat_str = cell_content.Text.Trim();
+
+            int N_mat = Convert.ToInt32(N_Mat_str);
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show("Удалим материал № " + N_Mat_str + " ? ", "Внимание!", buttons);
+            if (result == MessageBoxResult.No) return;
+            // Удалим элемент из коллекции
+
+            List<defOne_mat> newMats = new List<defOne_mat>();
+            dgrMatsProps.Items.Clear();
+            defOne_mat newOneMat = new defOne_mat();
+
+            for (int ii = 0; ii < materials.All_mats.Count; ii++)
+            {
+                if (ii < N_mat - 1)
+                {
+                    newMats.Add(materials.All_mats[ii]);
+                    dgrMatsProps.Items.Add(materials.All_mats[ii]);
+                }
+                else if (ii == N_mat - 1) continue;
+                else
+                {
+                    newOneMat = materials.All_mats[ii];
+                    newOneMat.N_mat = ii;
+                    newMats.Add(newOneMat);
+                    dgrMatsProps.Items.Add(newOneMat);
+                }
+            } // for
+
+            materials.All_mats = newMats;
+            txtN_mats.Text = materials.All_mats.Count.ToString();
         }
     }
 }

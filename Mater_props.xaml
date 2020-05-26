@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VP_CALC"
         mc:Ignorable="d"
-        Title="Свойства материала" Height="300" Width="600">
+        Title="Свойства материала" Height="300" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Label x:Name="lblN_mat" Content="Номер материала" HorizontalAlignment="Left" Margin="19,45,0,0" VerticalAlignment="Top" Width="119" FontWeight="Bold"/>
         <Label x:Name="lblMod_upr" Content="Модуль упругости, МПа" HorizontalAlignment="Left" Margin="19,96,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold"/>
@@ -21,8 +21,8 @@
             <ComboBoxItem Content="бронза"/>
             <ComboBoxItem Content="титан"/>
         </ComboBox>
-        <Button x:Name="btnOk" Content="Ok" Margin="410,0,117.6,10.4" IsDefault="True" ToolTip="Сохранить данные и выйти" Height="19" VerticalAlignment="Bottom"/>
-        <Button x:Name="btnCancel" Content="Отмена" Margin="501,0,31.6,10.4" IsCancel="True" ToolTip="Выйти без сохранения" Height="19" VerticalAlignment="Bottom"/>
+        <Button x:Name="btnOk" Content="Ok" Margin="410,0,117.6,10.4" IsDefault="True" ToolTip="Сохранить данные и выйти" Height="29" VerticalAlignment="Bottom" Click="btnOk_Click"/>
+        <Button x:Name="btnCancel" Content="Отмена" Margin="501,0,31.6,10.4" IsCancel="True" ToolTip="Выйти без сохранения" Height="29" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

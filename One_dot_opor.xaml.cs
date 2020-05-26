@@ -67,5 +67,42 @@ namespace VP_CALC
                 txtComm.Text = value.Trim();
             }
         }
+// Обработка клика на Ok
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            string _str;
+            //----------Номер элемента----------------
+            _str = txtN_Elem.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtN_Elem.Focus();
+                return;
+            }
+           
+            //----------Смещение кормовое----------------
+            _str = txtSm_korm.Text.Trim();
+            if (_str == "")
+            {
+                MessageBox.Show("Значение параметра на введено!", "Внимание");
+                txtSm_korm.Focus();
+                return;
+            }
+            if (!kaa_convert.is_number(_str))
+            {
+                MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
+                txtSm_korm.Focus();
+                return;
+            }
+            
+            DialogResult = true;
+            Close();
+        }
     }
 }
