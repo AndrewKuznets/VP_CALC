@@ -91,14 +91,14 @@ namespace VP_CALC
 /// </summary>
     public class VP_INPUT_DATA
     {
-        public string CalcName; // имя расчёта
-        public int N_SmOpor; // количество смещаемых опор
-        public int N_TypeDP; // число типов дейдвудных подшипников
-        public int N_TypeMat; // число типов материалов
-        public string units_SYS; // система единиц
-        public bool print_Elems_VP; // печать элементовт валопровода
-        public bool print_Sm_Elems; // печать смещений элементов
-        public string LangPrint; // язык печати
+        public string CalcName=""; // имя расчёта
+        public int N_SmOpor=0; // количество смещаемых опор
+        public int N_TypeDP=0; // число типов дейдвудных подшипников
+        public int N_TypeMat=0; // число типов материалов
+        public string units_SYS="СГС"; // система единиц
+        public bool print_Elems_VP=true; // печать элементовт валопровода
+        public bool print_Sm_Elems = true; // печать смещений элементов
+        public string LangPrint="Русский"; // язык печати
         public List<defOne_elem_VP> Elems_VP = new List<defOne_elem_VP>(); //элементы валопровода
         public List<defOne_force> Forces = new List<defOne_force>(); // сосредоточенные силы
         public List<defOne_moment> Moments = new List<defOne_moment>() ; // изгибающие моменты

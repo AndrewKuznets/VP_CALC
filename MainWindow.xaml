@@ -170,7 +170,7 @@
 
         </TabControl>
         <Button x:Name="btnLoadData" Content="Загрузить данные по валопроводу" HorizontalAlignment="Right" Margin="0,0,383.6,28.4" VerticalAlignment="Bottom" Width="222" Height="29" ToolTip="Загрузить данные по валопроводу" RenderTransformOrigin="-0.76,0.393"/>
-        <Button x:Name="btnSaveData" Content="Сохранить" Margin="0,0,310.6,28.4" ToolTip="Сохранить данные по валопроводу" VerticalAlignment="Bottom" Height="29" HorizontalAlignment="Right"/>
+        <Button x:Name="btnSaveData" Content="Сохранить" Margin="0,0,310.6,28.4" ToolTip="Сохранить данные по валопроводу" VerticalAlignment="Bottom" Height="29" HorizontalAlignment="Right" Click="btnSaveData_Click"/>
         <Button x:Name="btnCalcData" Content="Расчёт" HorizontalAlignment="Right" Margin="0,0,224,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Выполнить расчёт нагрузки на валопровод" RenderTransformOrigin="-0.76,0.393"/>
         <Button x:Name="btnExit" Content="Выход" HorizontalAlignment="Right" Margin="0,0,144,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Закончить работу с  с программой " RenderTransformOrigin="-0.76,0.393" IsCancel="True"/>
 

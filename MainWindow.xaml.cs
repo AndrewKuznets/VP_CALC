@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 
 namespace VP_CALC
@@ -890,6 +891,125 @@ namespace VP_CALC
 
             materials.All_mats = newMats;
             txtN_mats.Text = materials.All_mats.Count.ToString();
+        }
+// Сохранить все данные по валопроволу в XML-файле
+        private void btnSaveData_Click(object sender, RoutedEventArgs e)
+        {
+            XDocument xdoc = new XDocument();
+            XElement vp_calc_info = new XElement("VP_CALC_info");
+     
+            // Параметры валопровода
+            XElement vp_params = new XElement("VP_PARAMS");
+            XElement param = new XElement("PARAM",
+                new XAttribute("code", "calc_name"),
+                new XAttribute("name", "Имя расчёта"),
+                new XAttribute("value", txtCalcName.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+                new XAttribute("code", "NE"),
+                new XAttribute("name", "Количество элементов"),
+                new XAttribute("value", txtN_Elem.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+               new XAttribute("code", "NSO"),
+               new XAttribute("name", "Количество смещаемых опор"),
+               new XAttribute("value", txtN_SmOpor.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+              new XAttribute("code", "NV"),
+              new XAttribute("name", "Число точечных опор валопровода"),
+              new XAttribute("value", txtDotOpors.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+              new XAttribute("code", "NT"),
+              new XAttribute("name", "Количество типов дейдвудных подшипников"),
+              new XAttribute("value", txtN_TypeDP.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+             new XAttribute("code", "NMY"),
+             new XAttribute("name", "Количество изгибающих моментов"),
+             new XAttribute("value", txtN_moments.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+             new XAttribute("code", "NQ"),
+             new XAttribute("name", "Количество сосредоточенных сил"),
+             new XAttribute("value", txtN_forces.Text.Trim()));
+            vp_params.Add(param);
+
+            param = new XElement("PARAM",
+            new XAttribute("code", "NTM"),
+            new XAttribute("name", "Количество типов материала"),
+            new XAttribute("value", txtN_TypeMat.Text.Trim()));
+            vp_params.Add(param);
+            vp_calc_info.Add(vp_params);
+
+            // Добавим элементы валопровода
+            if ( vp_input_data.Elems_VP.Count> 0)
+            {
+                XElement vp_elements = new XElement ("VP_ELEMENTS");
+                XElement elem; 
+                foreach (defOne_elem_VP One_elem_VP in vp_input_data.Elems_VP)
+                {
+                    elem = new XElement("ELEM",
+                         new XAttribute("number", One_elem_VP.N_elem.ToString()),
+                         new XAttribute("Lx", One_elem_VP.Lx.ToString()),
+                         new XAttribute("D_vala", One_elem_VP.D_vala.ToString()),
+                         new XAttribute("D2", One_elem_VP.D2.ToString()),
+                         new XAttribute("D3", One_elem_VP.D3.ToString()),
+                         new XAttribute("N_Layers", One_elem_VP.N_Layers.ToString()),
+                         new XAttribute("Mat1", One_elem_VP.Mat1),
+                         new XAttribute("Mat2", One_elem_VP.Mat2),
+                         new XAttribute("Env", One_elem_VP.Env),
+                         new XAttribute("Comment", One_elem_VP.Comment));
+                    vp_elements.Add(elem);
+                }
+                vp_calc_info.Add(vp_elements);
+            }
+            //<!--Сосредоточенные силы,т-->
+            if (vp_input_data.Forces.Count > 0)
+            {
+                XElement Xpoint_forces = new XElement("point_forces");
+                XElement Xforce;
+                foreach (defOne_force One_force in vp_input_data.Forces)
+                {
+                    Xforce = new XElement("force",
+                         new XAttribute("number", One_force.N_force.ToString()),
+                         new XAttribute("N_elem", One_force.N_elem.ToString()),
+                         new XAttribute("Value", One_force.Value.ToString()),
+                         new XAttribute("Env", One_force.Env.ToString()),
+                         new XAttribute("Comment", One_force.Comment));
+                    Xpoint_forces.Add(Xforce);
+                }
+                vp_calc_info.AddAnnotation("Силы");
+                vp_calc_info.Add(Xpoint_forces);
+            }
+
+            //<!--Изгибающие моменты-->
+            if (vp_input_data.Forces.Count > 0)
+            {
+                XElement Xbending_moments = new XElement("bending_moments");
+                XElement Xbend_moment;
+                foreach (defOne_moment One_moment in vp_input_data.Moments)
+                {
+                    Xbend_moment = new XElement("bend_moment",
+                         new XAttribute("number", One_moment.N_moment.ToString()),
+                         new XAttribute("N_elem", One_moment.N_elem.ToString()),
+                         new XAttribute("Value", One_moment.Value.ToString()),
+                         new XAttribute("Comment", One_moment.Comment));
+                    Xbending_moments.Add(Xbend_moment);
+                }
+                vp_calc_info.Add(Xbending_moments);
+            }
+
+
+            xdoc.Add(vp_calc_info);
+            xdoc.Save("D:\\TMP\\VP_INPUT.XML");
         }
     }
 }
