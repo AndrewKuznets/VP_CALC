@@ -35,7 +35,7 @@
             <TabItem Header="Элементы валопровода">
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="labelTableTitle" Content="Элементы валопровода, всего" HorizontalAlignment="Left" Margin="41,18,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_Elem" HorizontalAlignment="Left" Height="23" Margin="235,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" IsEnabled="False"/>
+                    <TextBox x:Name="txtKol_Elems" HorizontalAlignment="Left" Height="23" Margin="235,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" IsEnabled="False"/>
                     <DataGrid x:Name="dgrVP_elems" Margin="10,67,13.202,53.4" Grid.ColumnSpan="4" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.DataContext>
                             <local:defOne_elem_VP/>
@@ -78,6 +78,8 @@
                     <Button x:Name="btnEditOneMat" Content="Исправить" HorizontalAlignment="Left" Margin="551,105,0,0" VerticalAlignment="Top" Width="123" ToolTip="Исправить параметры материала" Click="btnEditOneMat_Click"/>
                     <Button x:Name="btnDelOneMat" Content="Удалить" HorizontalAlignment="Left" Margin="551,148,0,0" VerticalAlignment="Top" Width="123" ToolTip="Удалить" RenderTransformOrigin="0.442,5.542" Click="btnDelOneMat_Click"/>
                     <TextBox x:Name="txtN_mats" HorizontalAlignment="Left" Height="23" Margin="172,30,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="49"/>
+                    <Button x:Name="btnMatSave" Content="Сохранить" HorizontalAlignment="Left" Margin="551,184,0,0" VerticalAlignment="Top" Width="123" ToolTip="Сохранить материалы в XML-файле" RenderTransformOrigin="0.442,5.542" Click="btnMatSave_Click"/>
+                    <Button x:Name="btnMatLoad" Content="Загрузить" HorizontalAlignment="Left" Margin="551,224,0,0" VerticalAlignment="Top" Width="123" ToolTip="Загрузить материалы из XML-файла" RenderTransformOrigin="0.442,5.542" Click="btnDelOneMat_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Нагрузка">
@@ -160,7 +162,7 @@
                     <Button x:Name="btnEditDotOpor" Content="Исправить" HorizontalAlignment="Left" Margin="776,334,0,0" VerticalAlignment="Top" Width="110" ToolTip="Исправить параметры точечной опоры" RenderTransformOrigin="0.567,4.323" Click="btnEditDotOpor_Click"/>
                     <Button x:Name="btnDelDotOpor" Content="Удалить" HorizontalAlignment="Left" Margin="776,374,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.458,5.062" ToolTip="Удалить точечную опору из таблицы" Click="btnDelDotOpor_Click"/>
                     <TextBox x:Name="txtProtOpors" HorizontalAlignment="Left" Height="23" Margin="379,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtDotOpors" HorizontalAlignment="Left" Height="23" Margin="484,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="39" IsEnabled="False"/>
+                    <TextBox x:Name="txtN_DotOpors" HorizontalAlignment="Left" Height="23" Margin="484,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="39" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Результаты расчёта">
@@ -169,10 +171,10 @@
 
 
         </TabControl>
-        <Button x:Name="btnLoadData" Content="Загрузить данные по валопроводу" HorizontalAlignment="Right" Margin="0,0,383.6,28.4" VerticalAlignment="Bottom" Width="222" Height="29" ToolTip="Загрузить данные по валопроводу" RenderTransformOrigin="-0.76,0.393"/>
-        <Button x:Name="btnSaveData" Content="Сохранить" Margin="0,0,310.6,28.4" ToolTip="Сохранить данные по валопроводу" VerticalAlignment="Bottom" Height="29" HorizontalAlignment="Right" Click="btnSaveData_Click"/>
+        <Button x:Name="btnLoadData" Content="Загрузить данные по валопроводу" HorizontalAlignment="Right" Margin="0,0,383.6,28.4" VerticalAlignment="Bottom" Width="222" Height="29" ToolTip="Загрузить данные по валопроводу в XML-формате" RenderTransformOrigin="-0.76,0.393" Click="btnLoadData_Click"/>
+        <Button x:Name="btnSaveData" Content="Сохранить" Margin="0,0,310.6,28.4" ToolTip="Сохранить данные по валопроводу в XML-формате" VerticalAlignment="Bottom" Height="29" HorizontalAlignment="Right" Click="btnSaveData_Click"/>
         <Button x:Name="btnCalcData" Content="Расчёт" HorizontalAlignment="Right" Margin="0,0,224,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Выполнить расчёт нагрузки на валопровод" RenderTransformOrigin="-0.76,0.393"/>
-        <Button x:Name="btnExit" Content="Выход" HorizontalAlignment="Right" Margin="0,0,144,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Закончить работу с  с программой " RenderTransformOrigin="-0.76,0.393" IsCancel="True"/>
+        <Button x:Name="btnExit" Content="Выход" HorizontalAlignment="Right" Margin="0,0,144,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Закончить работу с  с программой " RenderTransformOrigin="-0.76,0.393" IsCancel="True" Click="btnExit_Click"/>
 
     </Grid>
 </Window>

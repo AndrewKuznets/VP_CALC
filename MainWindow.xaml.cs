@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
+
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Xml;
+
 
 
 namespace VP_CALC
@@ -60,7 +62,7 @@ namespace VP_CALC
             dgrVP_elems.Items.Add(newOneElem);
             vp_input_data.Elems_VP.Add(newOneElem);
 
-            txtN_Elem.Text = vp_input_data.Elems_VP.Count.ToString();
+            txtKol_Elems.Text = vp_input_data.Elems_VP.Count.ToString();
         }
 
         // Редактирование элемента валопровода
@@ -127,7 +129,7 @@ namespace VP_CALC
             dgrVP_elems.Items.Insert(N_Elem - 1, newOneElem);
             dgrVP_elems.Items.RemoveAt(N_Elem);
             dgrVP_elems.SelectedIndex = N_Elem - 1;
-          
+
         }
         // Удалить элемент ВП
         private void btnDelElem_Click(object sender, RoutedEventArgs e)
@@ -149,7 +151,7 @@ namespace VP_CALC
 
             int N_Elem = Convert.ToInt32(N_Elem_str);
             MessageBoxButton buttons = MessageBoxButton.YesNo;
-            MessageBoxResult result = MessageBox.Show("Удалим элемент валопровода № "+ N_Elem_str + " ? ", "Внимание!", buttons);
+            MessageBoxResult result = MessageBox.Show("Удалим элемент валопровода № " + N_Elem_str + " ? ", "Внимание!", buttons);
             if (result == MessageBoxResult.No) return;
             // Удалим элемент из коллекции
 
@@ -159,30 +161,30 @@ namespace VP_CALC
 
             for (int ii = 0; ii < vp_input_data.Elems_VP.Count; ii++)
             {
-                if (ii < N_Elem -1)
+                if (ii < N_Elem - 1)
                 {
                     newElems_VP.Add(vp_input_data.Elems_VP[ii]);
                     dgrVP_elems.Items.Add(vp_input_data.Elems_VP[ii]);
                 }
-                else if (ii == N_Elem -1) continue;
+                else if (ii == N_Elem - 1) continue;
                 else
                 {
                     newOne_elem_VP = vp_input_data.Elems_VP[ii];
-                    newOne_elem_VP.N_elem = ii ;
+                    newOne_elem_VP.N_elem = ii;
                     newElems_VP.Add(newOne_elem_VP);
                     dgrVP_elems.Items.Add(newOne_elem_VP);
                 }
             } // for
 
             vp_input_data.Elems_VP = newElems_VP;
-            txtN_Elem.Text = vp_input_data.Elems_VP.Count.ToString();
+            txtKol_Elems.Text = vp_input_data.Elems_VP.Count.ToString();
 
         }
-/// <summary>
-/// Сохранить данные шапки ВП
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Сохранить данные шапки ВП
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSaveGlabalData_Click(object sender, RoutedEventArgs e)
         {
             string _str = txtCalcName.Text.Trim();
@@ -242,14 +244,14 @@ namespace VP_CALC
 
             if (rbtSGS.IsChecked == true) vp_input_data.units_SYS = "СГС";
             else vp_input_data.units_SYS = "СИ";
-           
+
             vp_input_data.print_Elems_VP = chbPrintElemVP.IsChecked.Value;
             vp_input_data.print_Sm_Elems = chbPrintSMElem.IsChecked.Value;
 
             if (radioButtonRus.IsChecked == true) vp_input_data.LangPrint = "Rus";
             else vp_input_data.LangPrint = "Eng";
         }
-// Добавить силу
+        // Добавить силу
         private void btnAddForce_Click(object sender, RoutedEventArgs e)
         {
             // Вызываем окно ввода имени данных по параметрам силы
@@ -273,7 +275,7 @@ namespace VP_CALC
 
             txtN_forces.Text = vp_input_data.Forces.Count.ToString();
         }
-// Исправить силу в таблице
+        // Исправить силу в таблице
         private void btnEditForce_Click(object sender, RoutedEventArgs e)
         {
             if (dgrForces.SelectedItem == null)
@@ -324,7 +326,7 @@ namespace VP_CALC
             dgrForces.Items.RemoveAt(N_Force);
             dgrForces.SelectedIndex = N_Force - 1;
         }
-// Удалить силу из таблицы
+        // Удалить силу из таблицы
         private void btnDelForce_Click(object sender, RoutedEventArgs e)
         {
 
@@ -371,7 +373,7 @@ namespace VP_CALC
             vp_input_data.Forces = newForces;
             txtN_forces.Text = vp_input_data.Forces.Count.ToString();
         }
-// Добавить момент
+        // Добавить момент
         private void btnAddMom_Click(object sender, RoutedEventArgs e)
         {
             // Вызываем окно ввода имени данных по параметрам момента
@@ -394,7 +396,7 @@ namespace VP_CALC
 
             txtN_moments.Text = vp_input_data.Moments.Count.ToString();
         }
-// Редактировать момент
+        // Редактировать момент
         private void btnEditMom_Click(object sender, RoutedEventArgs e)
         {
             if (dgrMoments.SelectedItem == null)
@@ -443,7 +445,7 @@ namespace VP_CALC
             dgrMoments.Items.RemoveAt(N_Moment);
             dgrMoments.SelectedIndex = N_Moment - 1;
         }
-// Удаляем момент из таблицы
+        // Удаляем момент из таблицы
         private void btnDelMom_Click(object sender, RoutedEventArgs e)
         {
             if (dgrMoments.SelectedItem == null)
@@ -489,11 +491,11 @@ namespace VP_CALC
             vp_input_data.Moments = newMoments;
             txtN_moments.Text = vp_input_data.Moments.Count.ToString();
         }
-/// <summary>
-/// Добавить протяжённую опору
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Добавить протяжённую опору
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddProtOpor_Click(object sender, RoutedEventArgs e)
         {
             // Вызываем окно ввода  данных по протяжённой опоре
@@ -520,11 +522,11 @@ namespace VP_CALC
 
             txtProtOpors.Text = vp_input_data.Prot_opors.Count.ToString();
         }
-/// <summary>
-/// Исправить данные о протяжённой опоре
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Исправить данные о протяжённой опоре
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditProtOpor_Click(object sender, RoutedEventArgs e)
         {
             if (dgrProtOpors.SelectedItem == null)
@@ -580,11 +582,11 @@ namespace VP_CALC
             dgrProtOpors.Items.RemoveAt(N_prot_opor);
             dgrProtOpors.SelectedIndex = N_prot_opor - 1;
         }
-/// <summary>
-/// Удалим прот. опору в списке
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Удалим прот. опору в списке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDelProtOpor_Click(object sender, RoutedEventArgs e)
         {
 
@@ -631,11 +633,11 @@ namespace VP_CALC
             vp_input_data.Prot_opors = newProt_opors;
             txtProtOpors.Text = vp_input_data.Prot_opors.Count.ToString();
         }
-/// <summary>
-/// Добавление точечной опоры
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Добавление точечной опоры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddDotOpor_Click(object sender, RoutedEventArgs e)
         {
             // Вызываем окно ввода  данных по протяжённой опоре
@@ -656,13 +658,13 @@ namespace VP_CALC
             dgrDotOpors.Items.Add(newOneDotOpor);
             vp_input_data.Dot_opors.Add(newOneDotOpor);
 
-            txtDotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+            txtN_DotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
         }
-/// <summary>
-/// Исправить данные точечной опоры
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Исправить данные точечной опоры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditDotOpor_Click(object sender, RoutedEventArgs e)
         {
             if (dgrDotOpors.SelectedItem == null)
@@ -710,11 +712,11 @@ namespace VP_CALC
             dgrDotOpors.Items.RemoveAt(N_dot_opor);
             dgrDotOpors.SelectedIndex = N_dot_opor - 1;
         }
-/// <summary>
-/// Удалить точечную опору
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Удалить точечную опору
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDelDotOpor_Click(object sender, RoutedEventArgs e)
         {
             if (dgrDotOpors.SelectedItem == null)
@@ -758,13 +760,13 @@ namespace VP_CALC
             } // for
 
             vp_input_data.Dot_opors = newDot_opors;
-            txtDotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+            txtN_DotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
         }
-/// <summary>
-/// Добавить материал
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Добавить материал
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddOneMat_Click(object sender, RoutedEventArgs e)
         {
             // Вызываем окно ввода  данных по материалу
@@ -788,11 +790,11 @@ namespace VP_CALC
 
             txtN_mats.Text = materials.All_mats.Count.ToString();
         }
-/// <summary>
-/// Исправить данные по материалу
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Исправить данные по материалу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditOneMat_Click(object sender, RoutedEventArgs e)
         {
             if (dgrMatsProps.SelectedItem == null)
@@ -842,11 +844,11 @@ namespace VP_CALC
             dgrMatsProps.Items.RemoveAt(N_mat);
             dgrMatsProps.SelectedIndex = N_mat - 1;
         }
-/// <summary>
-/// Удалить материала
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        /// <summary>
+        /// Удалить материала
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDelOneMat_Click(object sender, RoutedEventArgs e)
         {
             if (dgrMatsProps.SelectedItem == null)
@@ -892,12 +894,12 @@ namespace VP_CALC
             materials.All_mats = newMats;
             txtN_mats.Text = materials.All_mats.Count.ToString();
         }
-// Сохранить все данные по валопроволу в XML-файле
+        // Сохранить все данные по валопроволу в XML-файле
         private void btnSaveData_Click(object sender, RoutedEventArgs e)
         {
             XDocument xdoc = new XDocument();
             XElement vp_calc_info = new XElement("VP_CALC_info");
-     
+
             // Параметры валопровода
             XElement vp_params = new XElement("VP_PARAMS");
             XElement param = new XElement("PARAM",
@@ -909,7 +911,7 @@ namespace VP_CALC
             param = new XElement("PARAM",
                 new XAttribute("code", "NE"),
                 new XAttribute("name", "Количество элементов"),
-                new XAttribute("value", txtN_Elem.Text.Trim()));
+                new XAttribute("value", txtKol_Elems.Text.Trim()));
             vp_params.Add(param);
 
             param = new XElement("PARAM",
@@ -921,7 +923,7 @@ namespace VP_CALC
             param = new XElement("PARAM",
               new XAttribute("code", "NV"),
               new XAttribute("name", "Число точечных опор валопровода"),
-              new XAttribute("value", txtDotOpors.Text.Trim()));
+              new XAttribute("value", txtN_DotOpors.Text.Trim()));
             vp_params.Add(param);
 
             param = new XElement("PARAM",
@@ -950,10 +952,10 @@ namespace VP_CALC
             vp_calc_info.Add(vp_params);
 
             // Добавим элементы валопровода
-            if ( vp_input_data.Elems_VP.Count> 0)
+            if (vp_input_data.Elems_VP.Count > 0)
             {
-                XElement vp_elements = new XElement ("VP_ELEMENTS");
-                XElement elem; 
+                XElement vp_elements = new XElement("VP_ELEMENTS");
+                XElement elem;
                 foreach (defOne_elem_VP One_elem_VP in vp_input_data.Elems_VP)
                 {
                     elem = new XElement("ELEM",
@@ -1006,10 +1008,218 @@ namespace VP_CALC
                 }
                 vp_calc_info.Add(Xbending_moments);
             }
+            // < !--Протяжённые опоры-- >
+            if (vp_input_data.Prot_opors.Count > 0)
+            {
+                XElement XProt_opors = new XElement("extent_bearings");
+                XElement XOne_prot_opor;
+                foreach (defOne_prot_opor One_prot_opor in vp_input_data.Prot_opors)
+                {
+                    XOne_prot_opor = new XElement("extent_bearing",
+                         new XAttribute("number", One_prot_opor.N_prot_opor.ToString()),
+                         new XAttribute("N_elem", One_prot_opor.N_elem.ToString()),
+                         new XAttribute("Kol_elems", One_prot_opor.Kol_elems.ToString()),
+                         new XAttribute("Tg", One_prot_opor.Tg.ToString()),
+                         new XAttribute("Sm_korm", One_prot_opor.Sm_korm.ToString()),
+                         new XAttribute("DZ", One_prot_opor.DZ.ToString()),
+                         new XAttribute("Ss_upr", One_prot_opor.T_upr_osn.ToString()),
+                         new XAttribute("Comment", One_prot_opor.Comment));
+                    XProt_opors.Add(XOne_prot_opor);
+                }
+                vp_calc_info.Add(XProt_opors);
+            }
 
+            // < !--Точечные опоры-- >
+            if (vp_input_data.Dot_opors.Count > 0)
+            {
+                XElement XDot_opors = new XElement("dot_bearings");
+                XElement XOne_dot_opor;
+                foreach (defOne_dot_opor One_dot_opor in vp_input_data.Dot_opors)
+                {
+                    XOne_dot_opor = new XElement("dot_bearing",
+                         new XAttribute("number", One_dot_opor.N_dot_opor.ToString()),
+                         new XAttribute("N_elem", One_dot_opor.N_elem.ToString()),
+                         new XAttribute("Sm_korm", One_dot_opor.Sm_korm.ToString()),
+                         new XAttribute("Comment", One_dot_opor.Comment));
+                    XDot_opors.Add(XOne_dot_opor);
+                }
+                vp_calc_info.Add(XDot_opors);
+            }
+
+            // Настройки (ИИ и печать)
+            string sys_units;
+            if (rbtSGS.IsChecked == true) sys_units = "СГС";
+            else sys_units = "СИ";
+
+            string PrintElemVP;
+            if (chbPrintElemVP.IsChecked == true) PrintElemVP = "есть";
+            else PrintElemVP = "нет";
+
+            string PrintSMElem;
+            if (chbPrintSMElem.IsChecked == true) PrintSMElem = "есть";
+            else PrintSMElem = "есть";
+
+            string PrintLang;
+            if (radioButtonEng.IsChecked == true) PrintLang = "Английский";
+            else PrintLang = "Русский";
+
+            XElement Xsettings = new XElement("settings",
+                  new XAttribute("units", sys_units),
+                  new XAttribute("VP_ELEMENTS_print", PrintElemVP),
+                  new XAttribute("VP_ELEMENTS_disp_print", PrintSMElem),
+                  new XAttribute("language_print", PrintLang));
+            vp_calc_info.Add(Xsettings);
 
             xdoc.Add(vp_calc_info);
-            xdoc.Save("D:\\TMP\\VP_INPUT.XML");
+            // Сохранение файла
+            System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            saveFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
+            saveFileDialog1.FileName = "VP_CALC_INPUT";
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+
+            var XMLfile = saveFileDialog1.FileName;
+            xdoc.Save(XMLfile);
+        }
+        // Сохранить материалы во внешнем XML-файле
+        private void btnMatSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (materials.All_mats.Count > 0)
+            {
+                XDocument xdoc = new XDocument();
+                XElement XMaterials = new XElement("Materials");
+                XElement XOne_mat;
+                foreach (defOne_mat One_mat in materials.All_mats)
+                {
+                    XOne_mat = new XElement("dot_bearing",
+                         new XAttribute("number", One_mat.N_mat.ToString()),
+                         new XAttribute("name", One_mat.Mat_name.Trim()),
+                         new XAttribute("elastic_modulus", One_mat.Mod_upr.ToString()),
+                         new XAttribute("shear_modulus", One_mat.Mod_sdv.ToString()),
+                         new XAttribute("density", One_mat.Densi.ToString()));
+                    XMaterials.Add(XOne_mat);
+                }
+                xdoc.Add(XMaterials);
+                System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+                saveFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
+                saveFileDialog1.FileName = "Materials";
+                if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+
+                var XMLfile = saveFileDialog1.FileName;
+                xdoc.Save(XMLfile);
+            }
+        }
+
+        public static string OpenXMLFile()
+        {
+            string pathXMLFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog1.InitialDirectory = pathXMLFolder + @"\Экспертиза-МРТ";
+            System.IO.Directory.CreateDirectory(pathXMLFolder);
+            openFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            {
+                return null;
+            }
+
+            var FileName = openFileDialog1.FileName;
+            return FileName;
+        }
+        /// <summary>
+        /// Загрузить данные по ВП из XML-файла
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLoadData_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+
+            var XMLFileName = openFileDialog1.FileName;
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(XMLFileName);
+
+            // получим корневой элемент
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNode VP_CALC_info = xRoot;
+
+            foreach (XmlNode division in VP_CALC_info.ChildNodes)
+            {
+                // если узел - VP_PARAMS
+                if (division.Name == "VP_PARAMS")
+                {
+                    foreach (XmlNode param in division.ChildNodes)
+                    {
+                        XmlNode attr = param.Attributes.GetNamedItem("code");
+                        if (attr.Value == "calc_name")
+                        {
+                            txtCalcName.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NE")
+                        {
+                            txtKol_Elems.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NSO")
+                        {
+                            txtN_SmOpor.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NV")
+                        {
+                            txtN_DotOpors.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NT")
+                        {
+                            txtN_TypeDP.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NMY")
+                        {
+                            txtN_moments.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NQ")
+                        {
+                            txtN_forces.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                        if (attr.Value == "NTM")
+                        {
+                            txtN_TypeMat.Text = param.Attributes.GetNamedItem("value").Value;
+                        }
+                    }
+                }
+                // если узел - settings
+                if (division.Name == "settings")
+                {
+                    XmlNode attr = division.Attributes.GetNamedItem("units");
+                    if (attr.Value == "СГС") rbtSGS.IsChecked = true;
+                    else rbtSI.IsChecked = true;
+
+                    attr = division.Attributes.GetNamedItem("VP_ELEMENTS_print");
+                    if (attr.Value == "есть") chbPrintElemVP.IsChecked = true;
+                    else chbPrintElemVP.IsChecked = false;
+
+                    attr = division.Attributes.GetNamedItem("VP_ELEMENTS_disp_print");
+                    if (attr.Value == "есть") chbPrintSMElem.IsChecked = true;
+                    else chbPrintSMElem.IsChecked = false;
+
+                    attr = division.Attributes.GetNamedItem("language_print");
+                    if (attr.Value == "Русский") radioButtonRus.IsChecked = true;
+                    else radioButtonEng.IsChecked = true;
+
+                }
+            }
+        }
+/// <summary>
+/// Конец работы?
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show("Действительно хотите закончить работу?", "",
+                buttons, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No) return;
+
+            Close();
         }
     }
 }
