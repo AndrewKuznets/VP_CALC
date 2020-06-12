@@ -5,19 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VP_CALC"
         mc:Ignorable="d"
-        Title="Расчёт нагрузки на валопровод" Height="600." Width="1200">
+        Title="Расчёт нагрузки на валопровод" Height="600." Width="1200" Loaded="Window_Loaded">
     <Grid Margin="30,5,5,5" >
         <TabControl x:Name="tabControlVP" Margin="10,30,46,62.8">
             <TabItem Header="Общие данные">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,0" ToolTip="Проверить ">
                     <Label x:Name="lblCalcName" Content="Имя расчёта" HorizontalAlignment="Left" Margin="28,36,0,0" VerticalAlignment="Top" Height="26" Width="87" FontWeight="Bold"/>
                     <TextBox x:Name="txtCalcName" HorizontalAlignment="Left" Height="23" Margin="115,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" RenderTransformOrigin="-0.622,-0.13"/>
-                    <Label x:Name="lblNSmOpor" Content="Количество смещаемых опор" HorizontalAlignment="Left" Margin="52,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_SmOpor" HorizontalAlignment="Left" Height="23" Margin="239,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.47,-0.017"/>
+                    <Label x:Name="lblNSmOpor" Content="Количество точечных опор" HorizontalAlignment="Left" Margin="52,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
+                    <TextBox x:Name="txtN_SmOpor" HorizontalAlignment="Left" Height="23" Margin="246,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" RenderTransformOrigin="0.47,-0.017" IsEnabled="False"/>
                     <Label x:Name="lblTypeDP" Content="Число типов дейдвудных подшипников" HorizontalAlignment="Left" Margin="52,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_TypeDP" HorizontalAlignment="Left" Height="23" Margin="300,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.222,0.2"/>
+                    <TextBox x:Name="txtN_TypeDP" HorizontalAlignment="Left" Height="23" Margin="300,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.222,0.2"/>
                     <Label x:Name="lblN_Type_Mat" Content="Число типов материалов" HorizontalAlignment="Left" Margin="52,168,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.484,-0.328" FontWeight="Bold"/>
-                    <TextBox x:Name="txtN_TypeMat" HorizontalAlignment="Left" Height="23" Margin="300,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.222,0.2"/>
+                    <TextBox x:Name="txtN_TypeMat" HorizontalAlignment="Left" Height="23" Margin="300,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.222,0.2"/>
                     <Grid Margin="65,203,437,87">
                         <RadioButton x:Name="rbtSI" Content="СИ" HorizontalAlignment="Left" Margin="0,26,0,-0.2" VerticalAlignment="Top" Height="25" Width="101" FontWeight="Bold"/>
                         <RadioButton x:Name="rbtSGS" Content="СГС" HorizontalAlignment="Left" Margin="121,26,0,-0.2" VerticalAlignment="Top" Height="25" Width="101" FontWeight="Bold" IsChecked="True"/>
@@ -60,7 +60,8 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Свойства материалов" Height="20" Margin="-0.2,-1,-0.8,1">
-                <Grid Background="#FFE5E5E5" Margin="4,24,0,0">
+                <Grid Background="#FFE5E5E5" Margin="4,24,0,0" >
+
                     <Label x:Name="lblMatProp" Content="Mатериалы, всего" HorizontalAlignment="Left" Margin="44,27,0,0" VerticalAlignment="Top" Width="143" FontWeight="Bold"/>
                     <DataGrid x:Name="dgrMatsProps" Margin="60,66,0,168.2" Width="477" HorizontalAlignment="Left" IsReadOnly="True">
                         <DataGrid.DataContext>
@@ -79,7 +80,7 @@
                     <Button x:Name="btnDelOneMat" Content="Удалить" HorizontalAlignment="Left" Margin="551,148,0,0" VerticalAlignment="Top" Width="123" ToolTip="Удалить" RenderTransformOrigin="0.442,5.542" Click="btnDelOneMat_Click"/>
                     <TextBox x:Name="txtN_mats" HorizontalAlignment="Left" Height="23" Margin="172,30,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="49"/>
                     <Button x:Name="btnMatSave" Content="Сохранить" HorizontalAlignment="Left" Margin="551,184,0,0" VerticalAlignment="Top" Width="123" ToolTip="Сохранить материалы в XML-файле" RenderTransformOrigin="0.442,5.542" Click="btnMatSave_Click"/>
-                    <Button x:Name="btnMatLoad" Content="Загрузить" HorizontalAlignment="Left" Margin="551,224,0,0" VerticalAlignment="Top" Width="123" ToolTip="Загрузить материалы из XML-файла" RenderTransformOrigin="0.442,5.542" Click="btnDelOneMat_Click"/>
+                    <Button x:Name="btnMatLoad" Content="Загрузить" HorizontalAlignment="Left" Margin="551,224,0,0" VerticalAlignment="Top" Width="123" ToolTip="Загрузить материалы из XML-файла" RenderTransformOrigin="0.442,5.542" Click="btnMatLoad_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Нагрузка">
@@ -103,8 +104,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="lblbendMoms" Content="Изгибающие моменты, всего" HorizontalAlignment="Left" Margin="43,247,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold"/>
-                    <DataGrid x:Name="dgrMoments" HorizontalAlignment="Left" Margin="52,284,0,0"
-                              IsReadOnly="True" VerticalAlignment="Top" Width="313" Height="110" SelectedIndex="0">
+                    <DataGrid x:Name="dgrMoments" HorizontalAlignment="Left" Margin="43,278,0,0"
+                              IsReadOnly="True" VerticalAlignment="Top" Width="313" Height="118" SelectedIndex="0">
                         <DataGrid.DataContext>
                             <local:defOne_moment/>
                         </DataGrid.DataContext>
@@ -127,8 +128,8 @@
             </TabItem>
             <TabItem Header="Опоры">
                 <Grid Background="#FFE5E5E5">
-                    <Label x:Name="lblProtOpor" Content="Протяжённые опоры, всего " HorizontalAlignment="Left" Margin="198,38,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="176"/>
-                    <DataGrid x:Name="dgrProtOpors" HorizontalAlignment="Left" Margin="55,78,0,0" IsReadOnly="True" VerticalAlignment="Top" Width="716" Height="151">
+                    <Label x:Name="lblProtOpor" Content="Протяжённые опоры, всего " HorizontalAlignment="Left" Margin="61,39,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="176"/>
+                    <DataGrid x:Name="dgrProtOpors" HorizontalAlignment="Left" Margin="55,70,0,0" IsReadOnly="True" Width="716" Height="151" VerticalAlignment="Top">
                         <DataGrid.DataContext>
                             <local:defOne_prot_opor/>
                         </DataGrid.DataContext>
@@ -146,8 +147,8 @@
                     <Button x:Name="btnAddProtOpor" Content="Добавить опору" HorizontalAlignment="Left" Margin="776,81,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.509,3" Click="btnAddProtOpor_Click"/>
                     <Button x:Name="btnEditProtOpor" Content="Исправить" HorizontalAlignment="Left" Margin="776,118,0,0" VerticalAlignment="Top" Width="110" ToolTip="Исправить параметры протяжённой  опоры" Click="btnEditProtOpor_Click"/>
                     <Button x:Name="btnDelProtOpor" Content="Удалить" HorizontalAlignment="Left" Margin="776,163,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.458,5.062" ToolTip="Удалить протяжённую опору из таблицы" Click="btnDelProtOpor_Click"/>
-                    <Label x:Name="lblDotOpor" Content="Точечные опоры, всего" HorizontalAlignment="Left" Margin="326,263,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.365,9.578" Width="153"/>
-                    <DataGrid x:Name="dgrDotOpors" HorizontalAlignment="Left" Margin="237,302,0,0" VerticalAlignment="Top" Width="516" RenderTransformOrigin="0.502,-0.562" Height="91" AutoGenerateColumns="False" IsReadOnly="True" >
+                    <Label x:Name="lblDotOpor" Content="Точечные опоры, всего" HorizontalAlignment="Left" Margin="261,255,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.365,9.578" Width="153"/>
+                    <DataGrid x:Name="dgrDotOpors" HorizontalAlignment="Left" Margin="255,286,0,10.2" Width="516" RenderTransformOrigin="0.502,-0.562" AutoGenerateColumns="False" IsReadOnly="True" >
                         <DataGrid.DataContext>
                             <local:defOne_dot_opor/>
                         </DataGrid.DataContext>
@@ -161,19 +162,22 @@
                     <Button x:Name="btnAddDotOpor" Content="Добавить опору" HorizontalAlignment="Left" Margin="776,301,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.64,6.792" ToolTip="Добавить точечную опору" Click="btnAddDotOpor_Click"/>
                     <Button x:Name="btnEditDotOpor" Content="Исправить" HorizontalAlignment="Left" Margin="776,334,0,0" VerticalAlignment="Top" Width="110" ToolTip="Исправить параметры точечной опоры" RenderTransformOrigin="0.567,4.323" Click="btnEditDotOpor_Click"/>
                     <Button x:Name="btnDelDotOpor" Content="Удалить" HorizontalAlignment="Left" Margin="776,374,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.458,5.062" ToolTip="Удалить точечную опору из таблицы" Click="btnDelDotOpor_Click"/>
-                    <TextBox x:Name="txtProtOpors" HorizontalAlignment="Left" Height="23" Margin="379,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtN_DotOpors" HorizontalAlignment="Left" Height="23" Margin="484,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="39" IsEnabled="False"/>
+                    <TextBox x:Name="txtProtOpors" HorizontalAlignment="Left" Height="23" Margin="242,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtN_DotOpors" HorizontalAlignment="Left" Height="23" Margin="419,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="39" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Результаты расчёта">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5" ContextMenuClosing="Grid_ContextMenuClosing">
+                    <Button x:Name="btnOutToWord" Content="Вывод результатов расчёта валопровода в WORD" HorizontalAlignment="Left" Margin="49,56,0,0" VerticalAlignment="Top" Width="304" Height="29" Click="btnOutToWord_Click"/>
+                    <Button x:Name="btnDrawUprLine" Content="График упругой линии валопровода" HorizontalAlignment="Left" Margin="49,125,0,0" VerticalAlignment="Top" Width="304" Height="28" Click="btnDrawUprLine_Click"/>
+                </Grid>
             </TabItem>
 
 
         </TabControl>
         <Button x:Name="btnLoadData" Content="Загрузить данные по валопроводу" HorizontalAlignment="Right" Margin="0,0,383.6,28.4" VerticalAlignment="Bottom" Width="222" Height="29" ToolTip="Загрузить данные по валопроводу в XML-формате" RenderTransformOrigin="-0.76,0.393" Click="btnLoadData_Click"/>
         <Button x:Name="btnSaveData" Content="Сохранить" Margin="0,0,310.6,28.4" ToolTip="Сохранить данные по валопроводу в XML-формате" VerticalAlignment="Bottom" Height="29" HorizontalAlignment="Right" Click="btnSaveData_Click"/>
-        <Button x:Name="btnCalcData" Content="Расчёт" HorizontalAlignment="Right" Margin="0,0,224,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Выполнить расчёт нагрузки на валопровод" RenderTransformOrigin="-0.76,0.393"/>
+        <Button x:Name="btnCalcData" Content="Расчёт" HorizontalAlignment="Right" Margin="0,0,224,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Выполнить расчёт нагрузки на валопровод" RenderTransformOrigin="-0.76,0.393" Click="btnCalcData_Click"/>
         <Button x:Name="btnExit" Content="Выход" HorizontalAlignment="Right" Margin="0,0,144,28.8" VerticalAlignment="Bottom" Width="75" Height="29" ToolTip="Закончить работу с  с программой " RenderTransformOrigin="-0.76,0.393" IsCancel="True" Click="btnExit_Click"/>
 
     </Grid>

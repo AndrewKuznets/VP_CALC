@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml;
+using System.IO;
+using System.Globalization;
 
 
 
@@ -93,7 +95,7 @@ namespace VP_CALC
             Elem_VP dialog = new Elem_VP();
             // Инициализируем значения атрибутов
             dialog.N_Elem = N_Elem;
-            dialog.Lx = Convert.ToInt32(AttribPar[1]);
+            dialog.Lx = Convert.ToDouble(AttribPar[1]);
             dialog.D_vala = Convert.ToDouble(AttribPar[2]);
             dialog.D_Obl = Convert.ToDouble(AttribPar[3]);
             dialog.D_vnut = Convert.ToDouble(AttribPar[4]);
@@ -303,7 +305,7 @@ namespace VP_CALC
             // Инициализируем значения атрибутов
             dialog.N_Force = N_Force;
             dialog.N_Elem = Convert.ToInt32(AttribPar[1]);
-            dialog.ValueForce = Convert.ToInt32(AttribPar[2]);
+            dialog.ValueForce = Convert.ToDouble(AttribPar[2]);
             dialog.Env = AttribPar[3].Trim();
             dialog.Comm = AttribPar[4].Trim();
 
@@ -424,7 +426,7 @@ namespace VP_CALC
             // Инициализируем значения атрибутов
             dialog.N_Moment = N_Moment;
             dialog.N_Elem = Convert.ToInt32(AttribPar[1]);
-            dialog.ValueMoment = Convert.ToInt32(AttribPar[2]);
+            dialog.ValueMoment = Convert.ToDouble(AttribPar[2]);
             dialog.Comm = AttribPar[3].Trim();
 
             dialog.ShowDialog();
@@ -659,6 +661,8 @@ namespace VP_CALC
             vp_input_data.Dot_opors.Add(newOneDotOpor);
 
             txtN_DotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+            txtN_SmOpor.Text = vp_input_data.Dot_opors.Count.ToString();
+
         }
         /// <summary>
         /// Исправить данные точечной опоры
@@ -761,6 +765,7 @@ namespace VP_CALC
 
             vp_input_data.Dot_opors = newDot_opors;
             txtN_DotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+            txtN_SmOpor.Text = vp_input_data.Dot_opors.Count.ToString();
         }
         /// <summary>
         /// Добавить материал
@@ -845,7 +850,7 @@ namespace VP_CALC
             dgrMatsProps.SelectedIndex = N_mat - 1;
         }
         /// <summary>
-        /// Удалить материала
+        /// Удалить материал
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1079,6 +1084,8 @@ namespace VP_CALC
 
             var XMLfile = saveFileDialog1.FileName;
             xdoc.Save(XMLfile);
+            MessageBox.Show("Файл " + XMLfile + " с исходными данными валопровода сохранён!", "Ок", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
         }
         // Сохранить материалы во внешнем XML-файле
         private void btnMatSave_Click(object sender, RoutedEventArgs e)
@@ -1090,7 +1097,7 @@ namespace VP_CALC
                 XElement XOne_mat;
                 foreach (defOne_mat One_mat in materials.All_mats)
                 {
-                    XOne_mat = new XElement("dot_bearing",
+                    XOne_mat = new XElement("material",
                          new XAttribute("number", One_mat.N_mat.ToString()),
                          new XAttribute("name", One_mat.Mat_name.Trim()),
                          new XAttribute("elastic_modulus", One_mat.Mod_upr.ToString()),
@@ -1106,24 +1113,10 @@ namespace VP_CALC
 
                 var XMLfile = saveFileDialog1.FileName;
                 xdoc.Save(XMLfile);
+                MessageBox.Show("Файл " + XMLfile +" с описанием материалов валопровода сохранён!", "Ок", MessageBoxButton.OK, MessageBoxImage.Exclamation); 
             }
         }
-
-        public static string OpenXMLFile()
-        {
-            string pathXMLFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            openFileDialog1.InitialDirectory = pathXMLFolder + @"\Экспертиза-МРТ";
-            System.IO.Directory.CreateDirectory(pathXMLFolder);
-            openFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
-            {
-                return null;
-            }
-
-            var FileName = openFileDialog1.FileName;
-            return FileName;
-        }
+       
         /// <summary>
         /// Загрузить данные по ВП из XML-файла
         /// </summary>
@@ -1143,70 +1136,207 @@ namespace VP_CALC
             XmlElement xRoot = xDoc.DocumentElement;
             XmlNode VP_CALC_info = xRoot;
 
-            foreach (XmlNode division in VP_CALC_info.ChildNodes)
+            try
             {
-                // если узел - VP_PARAMS
-                if (division.Name == "VP_PARAMS")
+                foreach (XmlNode division in VP_CALC_info.ChildNodes)
                 {
-                    foreach (XmlNode param in division.ChildNodes)
+                    // если узел - VP_PARAMS
+                    if (division.Name == "VP_PARAMS")
                     {
-                        XmlNode attr = param.Attributes.GetNamedItem("code");
-                        if (attr.Value == "calc_name")
+                        foreach (XmlNode param in division.ChildNodes)
                         {
-                            txtCalcName.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NE")
-                        {
-                            txtKol_Elems.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NSO")
-                        {
-                            txtN_SmOpor.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NV")
-                        {
-                            txtN_DotOpors.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NT")
-                        {
-                            txtN_TypeDP.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NMY")
-                        {
-                            txtN_moments.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NQ")
-                        {
-                            txtN_forces.Text = param.Attributes.GetNamedItem("value").Value;
-                        }
-                        if (attr.Value == "NTM")
-                        {
-                            txtN_TypeMat.Text = param.Attributes.GetNamedItem("value").Value;
+                            XmlNode attr = param.Attributes.GetNamedItem("code");
+                            if (attr.Value == "calc_name")
+                            {
+                                txtCalcName.Text = param.Attributes.GetNamedItem("value").Value;
+                            }
+                            if (attr.Value == "NE")
+                            {
+                                txtKol_Elems.Text = param.Attributes.GetNamedItem("value").Value;
+                            }
+                            if (attr.Value == "NSO")
+                            {
+                                txtN_SmOpor.Text = param.Attributes.GetNamedItem("value").Value;
+                            }
+                            if (attr.Value == "NV")
+                            {
+                                txtN_DotOpors.Text = param.Attributes.GetNamedItem("value").Value;
+                                vp_input_data.N_SmOpor = Convert.ToInt32(txtN_DotOpors.Text);
+
+                            }
+                            if (attr.Value == "NT")
+                            {
+                                txtN_TypeDP.Text = param.Attributes.GetNamedItem("value").Value;
+                                vp_input_data.N_TypeDP = Convert.ToInt32(txtN_TypeDP.Text);
+                            }
+                            if (attr.Value == "NMY")
+                            {
+                                txtN_moments.Text = param.Attributes.GetNamedItem("value").Value;
+                            }
+                            if (attr.Value == "NQ")
+                            {
+                                txtN_forces.Text = param.Attributes.GetNamedItem("value").Value;
+                            }
+                            if (attr.Value == "NTM")
+                            {
+                                txtN_TypeMat.Text = param.Attributes.GetNamedItem("value").Value;
+                            }
                         }
                     }
-                }
-                // если узел - settings
-                if (division.Name == "settings")
-                {
-                    XmlNode attr = division.Attributes.GetNamedItem("units");
-                    if (attr.Value == "СГС") rbtSGS.IsChecked = true;
-                    else rbtSI.IsChecked = true;
+                    // если узел - settings
+                    if (division.Name == "settings")
+                    {
+                        XmlNode attr = division.Attributes.GetNamedItem("units");
+                        if (attr.Value == "СГС") rbtSGS.IsChecked = true;
+                        else rbtSI.IsChecked = true;
 
-                    attr = division.Attributes.GetNamedItem("VP_ELEMENTS_print");
-                    if (attr.Value == "есть") chbPrintElemVP.IsChecked = true;
-                    else chbPrintElemVP.IsChecked = false;
+                        attr = division.Attributes.GetNamedItem("VP_ELEMENTS_print");
+                        if (attr.Value == "есть")
+                        {
+                            chbPrintElemVP.IsChecked = true;
+                            vp_input_data.print_Elems_VP = true;
+                        }
+                        else
+                        {
+                            chbPrintElemVP.IsChecked = false;
+                            vp_input_data.print_Elems_VP = false;
+                        }
 
-                    attr = division.Attributes.GetNamedItem("VP_ELEMENTS_disp_print");
-                    if (attr.Value == "есть") chbPrintSMElem.IsChecked = true;
-                    else chbPrintSMElem.IsChecked = false;
+                        attr = division.Attributes.GetNamedItem("VP_ELEMENTS_disp_print");
+                        if (attr.Value == "есть")
+                        {
+                            chbPrintSMElem.IsChecked = true;
+                            vp_input_data.print_Sm_Elems = true;
+                        }
+                        else
+                        {
+                            chbPrintSMElem.IsChecked = false;
+                            vp_input_data.print_Sm_Elems = false;
+                        }
 
-                    attr = division.Attributes.GetNamedItem("language_print");
-                    if (attr.Value == "Русский") radioButtonRus.IsChecked = true;
-                    else radioButtonEng.IsChecked = true;
+                        attr = division.Attributes.GetNamedItem("language_print");
+                        if (attr.Value == "Русский") radioButtonRus.IsChecked = true;
+                        else radioButtonEng.IsChecked = true;
+                    }
+                    // если узел - VP_ELEMENTS 
+                    if (division.Name == "VP_ELEMENTS")
+                    {
+                        dgrVP_elems.Items.Clear();
+                        vp_input_data.Elems_VP.Clear();
+                        foreach (XmlNode elem in division.ChildNodes)
+                        {
+                            defOne_elem_VP newOneElem = new defOne_elem_VP
+                            {
+                                N_elem = Convert.ToInt32(elem.Attributes.GetNamedItem("number").Value),
+                                Lx = Convert.ToDouble(elem.Attributes.GetNamedItem("Lx").Value),
+                                D_vala = Convert.ToDouble(elem.Attributes.GetNamedItem("D_vala").Value),
+                                D2 = Convert.ToDouble(elem.Attributes.GetNamedItem("D2").Value),
+                                D3 = Convert.ToDouble(elem.Attributes.GetNamedItem("D3").Value),
+                                N_Layers = Convert.ToInt32(elem.Attributes.GetNamedItem("N_Layers").Value),
+                                Mat1 = elem.Attributes.GetNamedItem("Mat1").Value,
+                                Mat2 = elem.Attributes.GetNamedItem("Mat2").Value,
+                                Env = elem.Attributes.GetNamedItem("Env").Value,
+                                Comment = elem.Attributes.GetNamedItem("Comment").Value
+                            };
 
+                            dgrVP_elems.Items.Add(newOneElem);
+                            vp_input_data.Elems_VP.Add(newOneElem);
+                        }
+                        txtKol_Elems.Text = vp_input_data.Elems_VP.Count.ToString();
+                    }
+                    // если узел - point_forces 
+                    if (division.Name == "point_forces")
+                    {
+                        dgrForces.Items.Clear();
+                        vp_input_data.Forces.Clear();
+                        foreach (XmlNode one_force in division.ChildNodes)
+                        {
+                            defOne_force newOneForce = new defOne_force
+                            {
+                                N_force = Convert.ToInt32(one_force.Attributes.GetNamedItem("number").Value),
+                                N_elem = Convert.ToInt32(one_force.Attributes.GetNamedItem("N_elem").Value),
+                                Value = Convert.ToDouble(one_force.Attributes.GetNamedItem("Value").Value),
+                                Env = one_force.Attributes.GetNamedItem("Env").Value,
+                                Comment = one_force.Attributes.GetNamedItem("Comment").Value
+                            };
+
+                            dgrForces.Items.Add(newOneForce);
+                            vp_input_data.Forces.Add(newOneForce);
+                        }
+                        txtN_forces.Text = vp_input_data.Forces.Count.ToString();
+                    }
+                    // если узел - bending_moments
+                    if (division.Name == "bending_moments")
+                    {
+                        foreach (XmlNode one_moment in division.ChildNodes)
+                        {
+
+                            defOne_moment newOneMoment = new defOne_moment
+                            {
+                                N_moment = Convert.ToInt32(one_moment.Attributes.GetNamedItem("number").Value),
+                                N_elem = Convert.ToInt32(one_moment.Attributes.GetNamedItem("N_elem").Value),
+                                Value = Convert.ToDouble(one_moment.Attributes.GetNamedItem("Value").Value),
+                                Comment = one_moment.Attributes.GetNamedItem("Comment").Value
+                            };
+
+                            dgrMoments.Items.Add(newOneMoment);
+                            vp_input_data.Moments.Add(newOneMoment);
+                        }
+                        txtN_moments.Text = vp_input_data.Moments.Count.ToString();
+                    }
+                    // если узел - extent_bearings
+                    if (division.Name == "extent_bearings")
+                    {
+                        dgrProtOpors.Items.Clear();
+                        vp_input_data.Prot_opors.Clear();
+                        foreach (XmlNode one_prot_opor in division.ChildNodes)
+                        {
+                            defOne_prot_opor newOneProtOpor = new defOne_prot_opor
+                            {
+                                N_prot_opor = Convert.ToInt32(one_prot_opor.Attributes.GetNamedItem("number").Value),
+                                N_elem = Convert.ToInt32(one_prot_opor.Attributes.GetNamedItem("N_elem").Value),
+                                Kol_elems = Convert.ToInt32(one_prot_opor.Attributes.GetNamedItem("Kol_elems").Value),
+                                Tg = Convert.ToDouble(one_prot_opor.Attributes.GetNamedItem("Tg").Value),
+                                Sm_korm = Convert.ToDouble(one_prot_opor.Attributes.GetNamedItem("Sm_korm").Value),
+                                DZ = Convert.ToDouble(one_prot_opor.Attributes.GetNamedItem("DZ").Value),
+                                T_upr_osn = Convert.ToDouble(one_prot_opor.Attributes.GetNamedItem("Ss_upr").Value),
+                                Comment = one_prot_opor.Attributes.GetNamedItem("Comment").Value
+                            };
+                            dgrProtOpors.Items.Add(newOneProtOpor);
+                            vp_input_data.Prot_opors.Add(newOneProtOpor);
+
+                        }
+                        txtProtOpors.Text = vp_input_data.Prot_opors.Count.ToString();
+                    }
+                    // если узел - dot_bearings
+                    if (division.Name == "dot_bearings")
+                    {
+                        dgrDotOpors.Items.Clear();
+                        vp_input_data.Dot_opors.Clear();
+                        foreach (XmlNode one_dot_opor in division.ChildNodes)
+                        {
+                            defOne_dot_opor newOneDotOpor = new defOne_dot_opor
+                            {
+                                N_dot_opor = Convert.ToInt32(one_dot_opor.Attributes.GetNamedItem("number").Value),
+                                N_elem = Convert.ToInt32(one_dot_opor.Attributes.GetNamedItem("N_elem").Value),
+                                Sm_korm = Convert.ToDouble(one_dot_opor.Attributes.GetNamedItem("Sm_korm").Value),
+                                Comment = one_dot_opor.Attributes.GetNamedItem("Comment").Value
+                            };
+
+                            dgrDotOpors.Items.Add(newOneDotOpor);
+                            vp_input_data.Dot_opors.Add(newOneDotOpor);
+                        }
+                        txtN_DotOpors.Text = vp_input_data.Dot_opors.Count.ToString();
+                        txtN_SmOpor.Text = vp_input_data.Dot_opors.Count.ToString();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Некорректный XML-файл!", MessageBoxButton.OK, MessageBoxImage.Exclamation); return;
+            }
         }
+
 /// <summary>
 /// Конец работы?
 /// </summary>
@@ -1220,6 +1350,318 @@ namespace VP_CALC
             if (result == MessageBoxResult.No) return;
 
             Close();
+        }
+/// <summary>
+/// Загрузить свойства материалов из XML-файла
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnMatLoad_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+
+            var XMLFileName = openFileDialog1.FileName;
+            load_materials_props(XMLFileName);
+           
+        }
+        /// <summary>
+        /// Загрузить из свойства материалов из заданного XML-файла 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private bool load_materials_props(string XMLFileName)
+        {
+            if (!File.Exists(XMLFileName))
+            {
+                MessageBox.Show("Не найден файл свойств материалов " + XMLFileName, "Внимание",
+                           MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+            XmlDocument xDoc = new XmlDocument();
+        
+            xDoc.Load(XMLFileName);
+
+            // получим корневой элемент
+            XmlElement xMaterials = xDoc.DocumentElement;
+
+            try
+            {
+                dgrMatsProps.Items.Clear();
+                materials.All_mats.Clear();
+                foreach (XmlNode xOneMat in xMaterials.ChildNodes)
+                {
+                    defOne_mat newOneMat = new defOne_mat
+                    {
+                        N_mat = Convert.ToInt32(xOneMat.Attributes.GetNamedItem("number").Value),
+                        Mat_name = xOneMat.Attributes.GetNamedItem("name").Value,
+                        Mod_upr = Convert.ToDouble(xOneMat.Attributes.GetNamedItem("elastic_modulus").Value),
+                        Mod_sdv = Convert.ToDouble(xOneMat.Attributes.GetNamedItem("shear_modulus").Value),
+                        Densi = Convert.ToDouble(xOneMat.Attributes.GetNamedItem("density").Value)
+                    };
+                    dgrMatsProps.Items.Add(newOneMat);
+                    materials.All_mats.Add(newOneMat);
+                }
+                txtN_mats.Text = materials.All_mats.Count.ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Некорректный XML-файл со свойствами материалов!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+        }
+
+        /// Запустить расчёт валопровода
+
+        private void btnCalcData_Click(object sender, RoutedEventArgs e)
+        {
+            // Контроль полноты данных по валопроводу
+            string writePath = @"DATA"; // Файл данных о ВП
+            string text = "A1\nCalculation of Shafting ...\n";
+            string sign_print;
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(writePath, false, System.Text.Encoding.GetEncoding(866))) // Делаем файл в DOS-кодировке
+                {
+                    // Шапка данных по ВП 
+                    sw.WriteLine("А1");
+                    sw.WriteLine("   " + vp_input_data.CalcName + "\n");
+                  //  1 format(1x, i5)
+                    sw.WriteLine(string.Format(" {0,5:d}   NE  - количество элементов", vp_input_data.Elems_VP.Count));
+                    sw.WriteLine(string.Format(" {0,5:d}   NV  - количество точечных опор", vp_input_data.N_SmOpor));
+                    sw.WriteLine(string.Format(" {0,5:d}   NT  - число типов дейдвудных подшипников",vp_input_data.N_TypeDP));
+
+                    if (vp_input_data.print_Sm_Elems) sign_print = "     1"; else sign_print = "     0";
+                    sw.WriteLine(sign_print + "   KS - признак печати смещения элементов, (0-нет, 1-да)");
+
+                    if (vp_input_data.print_Elems_VP) sign_print = "     1"; else sign_print = "     0";
+                    sw.WriteLine(sign_print + "   KS1 - признак печати элементов, (0-нет, 1-да)");
+
+                    sw.WriteLine(string.Format(" {0,5:d}   MNY -  количество изгибающих моментов", vp_input_data.Moments.Count));
+                    sw.WriteLine(string.Format(" {0,5:d}   NQ  - количество сосредоточенных сил",vp_input_data.Forces.Count));
+                    sw.WriteLine(string.Format(" {0,5:d}   NTM - количество типов материала", Convert.ToInt32(txtN_TypeMat.Text)));
+
+                    if (vp_input_data.units_SYS == "СГС") sign_print = "     0"; else sign_print = "    1";
+                    sw.WriteLine(sign_print + "   NSI - пpизнак системы единиц (0 - СГС, 1 - СИ)");
+
+                    if (vp_input_data.LangPrint == "Русский") sign_print = "     0"; else sign_print = "    1";
+                    sw.WriteLine(sign_print + "   NLI - пpизнак языка распечатки (0 - русск., 1 - англ.");
+
+                    // Данные о свойствах материалов ВП
+                    if (materials.All_mats.Count == 0)
+                    {
+                        MessageBox.Show("Отсутствуют данные о материалах ВП","Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                    sw.WriteLine(string.Format("  {0,8:f1} {1,8:f1} {2,8:f1} модули упругости материалов", 
+                        materials.All_mats[0].Mod_upr, materials.All_mats[1].Mod_upr, materials.All_mats[2].Mod_upr));
+                    sw.WriteLine(string.Format("  {0,8:f1} {1,8:f1} {2,8:f1} модули сдвига материалов",
+                       materials.All_mats[0].Mod_sdv, materials.All_mats[1].Mod_sdv, materials.All_mats[2].Mod_sdv));
+                    sw.WriteLine(string.Format("  {0,7:f7}   {1,7:f4}    {2,7:f4} плотности материалов",
+                       materials.All_mats[0].Densi, materials.All_mats[1].Densi, materials.All_mats[2].Densi));
+                    sw.WriteLine("    4489.0       000000.0   модуль упругости материала подшипника (до 2-х)");
+
+                    // Данные по элементам ВП
+                    if (vp_input_data.Elems_VP.Count == 0)
+                    {
+                        MessageBox.Show("Отсутствуют данные об элементах ВП", "Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                    sw.WriteLine(" Дл.по   диаметр по слоям Дл.по к-во техни- ок-");
+                    sw.WriteLine(" оси х    1      2     3  оси y сло- ческие руж.");
+                    sw.WriteLine("  Lx     D1   d1(D2)  d2   Ly   ев   конс.  среда");
+                    // 22 format(1x, 5f6.1, 5i3)
+                    double Ly = 0.0;
+                    int indConst = 1;
+                    foreach (defOne_elem_VP  one_elem in vp_input_data.Elems_VP)
+                    {
+                        sw.WriteLine(string.Format(" {0,6:f1}{1,6:f1}{2,6:f1}{3,6:f1}{4,6:f1}{5,3:d}{6,3:d}{7,3:d}{8,3:d}{9,3:d}   {10,12}",
+                           one_elem.Lx/10, one_elem.D_vala/10, one_elem.D2/10, one_elem.D3/10, Ly, one_elem.N_Layers, 
+                           index_of_mat(one_elem.Mat1), index_of_mat(one_elem.Mat2), indConst, index_of_env(one_elem.Env),
+                            one_elem.Comment));
+                    } // for
+
+                    // Сосредоточенные силы
+                    if (vp_input_data.Forces.Count == 0)
+                    {
+                        MessageBox.Show("Отсутствуют данные о сосредоточенных силах", "Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                    //3 format(1x, i3, f10.1, i5)
+                    foreach (defOne_force one_force in vp_input_data.Forces)
+                    {
+                        sw.WriteLine(string.Format(" {0,3:d}{1,10:f1}{2,5:d}  {3,14}",
+                           one_force.N_elem, one_force.Value, index_of_env(one_force.Env), one_force.Comment));
+                    } // for
+
+                    // Изгибающие моменты
+                    if (vp_input_data.Moments.Count == 0)
+                    {
+                        MessageBox.Show("Отсутствуют данные об изгибающих моментах", "Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                    //28 format(1x, i3, f15.5)
+                    foreach (defOne_moment one_moment in vp_input_data.Moments)
+                    {
+                        sw.WriteLine(string.Format(" {0,3:d}{1,10:f1}{2, 10}",
+                           one_moment.N_elem, one_moment.Value, one_moment.Comment));
+                    } // for
+
+                    // Протяжённые опоры
+                    if (vp_input_data.Prot_opors.Count == 0)
+                    {
+                        MessageBox.Show("Отсутствуют данные о протяжённых опорах", "Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                    //101 format(1x, 5i5)
+                    if (vp_input_data.Prot_opors.Count == 1)
+                     sw.WriteLine(string.Format(" {0,5:d}{1,5:d}{2,5:d}{3,5:d}{4,5:d} к-во элементов в опорах", 1, vp_input_data.Prot_opors[0].Kol_elems, 0,0,0));
+                    else if (vp_input_data.Prot_opors.Count == 2)
+                        sw.WriteLine(string.Format(" {0,5:d}{1,5:d}{2,5:d}{3,5:d}{4,5:d} к-во элементов в опорах", 2,
+                            vp_input_data.Prot_opors[0].Kol_elems, vp_input_data.Prot_opors[1].Kol_elems, 0, 0));
+                    else if (vp_input_data.Prot_opors.Count == 3)
+                        sw.WriteLine(string.Format(" {0,5:d}{1,5:d}{2,5:d}{3,5:d}{4,5:d} к-во элементов в опорах", 3,
+                            vp_input_data.Prot_opors[0].Kol_elems, vp_input_data.Prot_opors[1].Kol_elems,
+                            vp_input_data.Prot_opors[2].Kol_elems, 0));
+                    else if (vp_input_data.Prot_opors.Count >= 4)
+                        sw.WriteLine(string.Format(" {0,5:d}{1,5:d}{2,5:d}{3,5:d}{4,5:d} к-во элементов в опорах", 4,
+                            vp_input_data.Prot_opors[0].Kol_elems, vp_input_data.Prot_opors[1].Kol_elems,
+                            vp_input_data.Prot_opors[2].Kol_elems, vp_input_data.Prot_opors[3].Kol_elems));
+
+                    sw.WriteLine("          0    0    0    0     Признак материала вкладыша опор от 1 до 4");
+
+                    //172 format(1x, 5f12.7)тангенс и смещение
+                    // 72 format(1x, 8f9.4) зазоры
+                    string n_elems= "      ", tgs_str="", sm_str = "", dz_str = "", tuo_str = "";
+                    foreach (defOne_prot_opor one_prot_opor in vp_input_data.Prot_opors)
+                    {
+                        n_elems = n_elems + string.Format("{0,5:d}", one_prot_opor.N_elem);
+                        tgs_str = tgs_str + string.Format("{0,12:f7}", one_prot_opor.Tg);
+                        sm_str = sm_str + string.Format("{0,12:f7}", one_prot_opor.Sm_korm/10 );
+                        dz_str = dz_str + string.Format("{0,9:f4}", one_prot_opor.DZ/10);
+                        tuo_str = tuo_str + string.Format("{0,9:f4}", one_prot_opor.T_upr_osn/10);
+                    }
+                    //102 format(6x, 5i5)
+                    sw.WriteLine(n_elems);
+                    sw.WriteLine(tgs_str + "  Тангенс угла наклона протяженных опор");
+                    sw.WriteLine(sm_str +  "  Смещение кормового торца протяженных опор");
+                    sw.WriteLine(dz_str +  "  Диаметральный зазор");
+                    sw.WriteLine(tuo_str + "  Толщина упругого основания");
+
+                    // Точечные опоры
+                    if (vp_input_data.Dot_opors.Count == 0)
+                    {
+                        MessageBox.Show("Отсутствуют данные о точечных опорах", "Внимание",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                    //121 format(1x, 10i5) - номера элементов
+                    //72 format(1x, 8f9.4) - смещения
+                    n_elems = ""; sm_str = ""; 
+                    foreach (defOne_dot_opor one_dot_opor in vp_input_data.Dot_opors)
+                    {
+                        n_elems = n_elems + string.Format("{0,5:d}", one_dot_opor.N_elem);
+                        sm_str = sm_str + string.Format("{0,9:f4}", one_dot_opor.Sm_korm);
+                    }
+                    sw.WriteLine(n_elems + "  Номера элементов точечных опор ");
+                    sw.WriteLine(sm_str +  "  смещения точечных опор");
+
+
+                    sw.Close();
+                    
+                    MessageBox.Show("Файл исходных данных для расчёта создан!", " Внимание",
+                        MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                
+            }
+            catch (Exception eWr)
+            {
+                MessageBox.Show(eWr.Message, "Ошибки при формировании DATA-файла", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return; 
+            }
+           
+        }
+/// <summary>
+/// Определение индекса материала по имени материала
+/// </summary>
+/// <param name="mat_name"></param>
+/// <returns></returns>
+        private int index_of_mat (string mat_name)
+        {
+            foreach (defOne_mat One_mat in materials.All_mats)
+            {
+                if (One_mat.Mat_name.Trim() == mat_name.Trim())
+                {
+                    return One_mat.N_mat;
+                }
+            }
+            return -1;
+        }
+        /// <summary>
+        /// Определение индекса окружающей среды по имени среды
+        /// </summary>
+        /// <param name="env_name"></param>
+        /// <returns></returns>
+        private int index_of_env(string env_name)
+        {
+            string[] envList = { "вода", "воздух", "масло" };
+
+            if (env_name.Trim() == "вода") return 1;
+            if (env_name.Trim() == "воздух") return 3;
+            if (env_name.Trim() == "масло") return 2;
+            return -1;
+        }
+// Загрузка главного окна
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Changing the decimal separator           
+            
+    //        NumberFormatInfo myInv = NumberFormatInfo.InvariantInfo;
+    //        if( myInv.CurrencyDecimalSeparator != "")
+     //       {
+     //           MessageBox.Show("Установите в настройках Windows разделитель дробной и целой части как '.'", "Внимание",
+    //                MessageBoxButton.OK, MessageBoxImage.Exclamation);
+    //            return;
+    //        }
+
+              load_materials_props("Materials.xml");
+        }
+
+        private void Grid_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+
+
+        }
+// Вывод результатов расчёта в Word 
+
+        private void btnOutToWord_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog1.Filter = "XML files(*.xml)|*.xml|All files(*.*)|*.*";
+            openFileDialog1.Title = "Укажите файл с результатами расчёта нагрузок на валопровод";
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+
+            string XMLFileName = openFileDialog1.FileName;
+            OutputResults.exportToWord(XMLFileName);
+        }
+/// <summary>
+//// График упругой линии валопровода
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+        private void btnDrawUprLine_Click(object sender, RoutedEventArgs e)
+        {
+            // Application.Run(new DrawUprLineVP());
+            WindowsFormsApplication3.Form1 dialog = new WindowsFormsApplication3.Form1();
+            dialog.ShowDialog();
         }
     }
 }

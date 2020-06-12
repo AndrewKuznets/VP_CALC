@@ -20,9 +20,9 @@
         <TextBox x:Name="txtValueForce" HorizontalAlignment="Left" Height="23" Margin="130,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
         <TextBox x:Name="txtComm" HorizontalAlignment="Left" Height="23" Margin="143,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" SpellCheck.IsEnabled="True"/>
         <ComboBox x:Name="cmbEnv" HorizontalAlignment="Left" Margin="284,85,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
-            <ListBoxItem Content="Вода"/>
-            <ListBoxItem Content="Воздух"/>
-            <ListBoxItem Content="Масло"/>
+            <ListBoxItem Content="вода"/>
+            <ListBoxItem Content="воздух"/>
+            <ListBoxItem Content="масло"/>
         </ComboBox>
         <Button x:Name="btnOк" Content="Ок" HorizontalAlignment="Left" Margin="310,231,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.365,-0.49" IsDefault="True" Click="btnOк_Click"/>
         <Button x:Name="btnEsk" Content="Отмена" HorizontalAlignment="Left" Margin="404,231,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.365,-0.49" IsDefault="True"/>

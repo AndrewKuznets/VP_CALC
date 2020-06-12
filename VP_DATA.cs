@@ -96,7 +96,7 @@ namespace VP_CALC
         public int N_TypeDP=0; // число типов дейдвудных подшипников
         public int N_TypeMat=0; // число типов материалов
         public string units_SYS="СГС"; // система единиц
-        public bool print_Elems_VP=true; // печать элементовт валопровода
+        public bool print_Elems_VP=true; // печать элементов валопровода
         public bool print_Sm_Elems = true; // печать смещений элементов
         public string LangPrint="Русский"; // язык печати
         public List<defOne_elem_VP> Elems_VP = new List<defOne_elem_VP>(); //элементы валопровода

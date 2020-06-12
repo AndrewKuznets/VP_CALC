@@ -61,6 +61,8 @@ namespace VP_CALC
         {
             get
             {
+                if (txtD_Obl.Text.Length == 0) return 0;
+                else
                 return Convert.ToDouble(txtD_Obl.Text);
             }
             set
@@ -190,13 +192,13 @@ namespace VP_CALC
             }
             //----------Диаметр облицовки----------------
             _str = txtD_Obl.Text.Trim();
-            if (_str == "")
-            {
-                MessageBox.Show("Значение параметра на введено!", "Внимание");
-                txtN_Layers.Focus();
-                return;
-            }
-            if (!kaa_convert.is_number(_str))
+            //if (_str == "")
+            //{
+            //    MessageBox.Show("Значение параметра на введено!", "Внимание");
+            //    txtN_Layers.Focus();
+            //    return;
+            //}
+            if (_str.Length > 0 && !kaa_convert.is_number(_str))
             {
                 MessageBox.Show("Нечисловые символы в значении параметра!", "Внимание");
                 txtD_Obl.Focus();
